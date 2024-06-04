@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -24,8 +25,10 @@ namespace TeploKor.Model
         public string employeeEducationSeries {  get; set; }
         public string employeeNumberOfMilitaryId { get; set; }
         public string employeeSeriesOfMilitaryId { get; set; }
+        [ForeignKey("Role")]
+        public int roleId { get; set; }
         public Employee() { }
-        public Employee(int employeeId, string employeeSurname, string employeeName, string? employeePatronymic, int employeeSeriesPassport, int employeeNumberPassport, string employeeEducation, string? employeeChildrenBirthCertificateNumber, string employeeNumberWorkBook, string employeeSeriesWorkBook, string employeeEducationNumber, string employeeEducationSeries, string employeeNumberOfMilitaryId, string employeeSeriesOfMilitaryId)
+        public Employee(int employeeId, string employeeSurname, string employeeName, string? employeePatronymic, int employeeSeriesPassport, int employeeNumberPassport, string employeeEducation, string? employeeChildrenBirthCertificateNumber, string employeeNumberWorkBook, string employeeSeriesWorkBook, string employeeEducationNumber, string employeeEducationSeries, string employeeNumberOfMilitaryId, string employeeSeriesOfMilitaryId, int roleId)
         {
             this.employeeId = employeeId;
             this.employeeSurname = employeeSurname;
@@ -41,6 +44,7 @@ namespace TeploKor.Model
             this.employeeEducationSeries = employeeEducationSeries;
             this.employeeNumberOfMilitaryId = employeeNumberOfMilitaryId;
             this.employeeSeriesOfMilitaryId = employeeSeriesOfMilitaryId;
+            this.roleId = roleId;
         }
     }
 }
