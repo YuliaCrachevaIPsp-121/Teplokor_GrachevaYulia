@@ -1,20 +1,24 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace TeploKor.Model
 {
-    public class Employee
+    public class Employee :INotifyPropertyChanged
     {
         [Key]
         public int employeeId { get; set; }
         public string employeeSurname { get; set; }
         public string employeeName { get; set; }
         public string? employeePatronymic { get; set; }
+        public string employeeContactNumber { get; set; }
+        public string employeeEmail { get; set; }
         public int employeeSeriesPassport { get; set; }
         public int employeeNumberPassport { get; set; }
         public string employeeEducation { get; set; }
@@ -23,12 +27,13 @@ namespace TeploKor.Model
         public string employeeSeriesWorkBook { get; set; }
         public string employeeEducationNumber { get; set; }
         public string employeeEducationSeries {  get; set; }
-        public string employeeNumberOfMilitaryId { get; set; }
-        public string employeeSeriesOfMilitaryId { get; set; }
-        [ForeignKey("Role")]
-        public int roleId { get; set; }
+        public string? employeeNumberOfMilitaryId { get; set; }
+        public string? employeeSeriesOfMilitaryId { get; set; }
+        public bool IsAdmin { get; set; }
+        public string employeeLogin {  get; set; }
+        public string employeePassword { get; set; }
         public Employee() { }
-        public Employee(int employeeId, string employeeSurname, string employeeName, string? employeePatronymic, int employeeSeriesPassport, int employeeNumberPassport, string employeeEducation, string? employeeChildrenBirthCertificateNumber, string employeeNumberWorkBook, string employeeSeriesWorkBook, string employeeEducationNumber, string employeeEducationSeries, string employeeNumberOfMilitaryId, string employeeSeriesOfMilitaryId, int roleId)
+        public Employee(int employeeId, string employeeSurname, string employeeName, string? employeePatronymic, int employeeSeriesPassport, int employeeNumberPassport, string employeeEducation, string? employeeChildrenBirthCertificateNumber, string employeeNumberWorkBook, string employeeSeriesWorkBook, string employeeEducationNumber, string employeeEducationSeries, string? employeeNumberOfMilitaryId, string? employeeSeriesOfMilitaryId, string employeeLogin, string employeePassword, string employeeContactNumber)
         {
             this.employeeId = employeeId;
             this.employeeSurname = employeeSurname;
@@ -44,7 +49,15 @@ namespace TeploKor.Model
             this.employeeEducationSeries = employeeEducationSeries;
             this.employeeNumberOfMilitaryId = employeeNumberOfMilitaryId;
             this.employeeSeriesOfMilitaryId = employeeSeriesOfMilitaryId;
-            this.roleId = roleId;
+            this.employeeLogin = employeeLogin;
+            this.employeePassword = employeePassword;
+            this.employeeContactNumber = employeeContactNumber;
+        }
+
+        public event PropertyChangedEventHandler PropertyChanged;
+        protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = "")
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
     }
 }

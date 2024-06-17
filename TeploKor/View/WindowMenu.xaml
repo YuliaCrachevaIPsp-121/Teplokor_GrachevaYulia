@@ -1,0 +1,51 @@
+﻿<Window x:Class="TeploKor.View.WindowMenu"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:TeploKor.View"
+        mc:Ignorable="d"
+        Title="WindowMenu" Height="300" Width="200" Background="#FFF7E0">
+    <Window.Resources>
+        <Style x:Key="FlatButtonStyle" TargetType="Button">
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="BorderBrush" Value="Transparent"/>
+            <Setter Property="Foreground" Value="Black"/>
+            <Setter Property="FontSize" Value="18"/>
+            <Setter Property="Margin" Value="0,5,0,5"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="0">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Background" Value="#FFF7E0"/>
+                    <Setter Property="Foreground" Value="Black"/>
+                </Trigger>
+                <Trigger Property="IsPressed" Value="True">
+                    <Setter Property="Background" Value="#FFE6D3"/>
+                    <Setter Property="Foreground" Value="Black"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+    </Window.Resources>
+    <Grid>
+        <StackPanel>
+            <Button Content="Профиль" Click="Profile_Click" Style="{StaticResource FlatButtonStyle}"/>
+            <Button Content="Бойлер" Click="Boiler_Click" Style="{StaticResource FlatButtonStyle}"/>
+            <Button Content="Трубы" Click="Pipes_Click" Style="{StaticResource FlatButtonStyle}"/>
+            <Button Content="Теплый пол" Click="WarmFloor_Click" Style="{StaticResource FlatButtonStyle}"/>
+            <Button Content="Радиаторы" Click="Radiators_Click" Style="{StaticResource FlatButtonStyle}"/>
+            <Button Content="Дымоход" Click="Chimney_Click" Style="{StaticResource FlatButtonStyle}"/>
+            <Button x:Name="OrdersButton" Content="Заказы клиентов" Click="Orders_Click" Visibility="Collapsed" Style="{StaticResource FlatButtonStyle}"/>
+            <Button x:Name="ProductsButton" Content="Управление товарами" Click="Products_Click" Visibility="Collapsed" Style="{StaticResource FlatButtonStyle}"/>
+            <Button x:Name="EmployeesButton" Content="Сотрудники" Click="Employees_Click" Visibility="Collapsed" Style="{StaticResource FlatButtonStyle}"/>
+            <Button Content="Выход" Click="Exit_Click" Style="{StaticResource FlatButtonStyle}" VerticalAlignment="Bottom" Margin="0,10,0,10"/>
+        </StackPanel>
+    </Grid>
+</Window>

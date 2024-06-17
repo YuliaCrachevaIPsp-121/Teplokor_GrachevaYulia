@@ -8,17 +8,30 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using System.Windows.Threading;
+using TeploKor.View;
 
 namespace TeploKor
 {
-    /// <summary>
-    /// Interaction logic for MainWindow.xaml
-    /// </summary>
     public partial class MainWindow : Window
     {
         public MainWindow()
         {
             InitializeComponent();
+
+            DispatcherTimer timer = new DispatcherTimer();
+            timer.Interval = TimeSpan.FromSeconds(3);
+            timer.Tick += new EventHandler((sender, e) =>
+            {
+                DispatcherTimer t = (DispatcherTimer)sender;
+                t.Stop();
+
+                WindowEntrance entrance = new WindowEntrance();
+                entrance.Show();
+
+                this.Close();
+            });
+            timer.Start();
         }
     }
 }
