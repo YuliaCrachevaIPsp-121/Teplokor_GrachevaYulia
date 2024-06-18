@@ -1,6 +1,7 @@
 ﻿using Microsoft.VisualBasic.ApplicationServices;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -18,9 +19,14 @@ namespace TeploKor.View
 {
     public partial class WindowRadiator : Window
     {
+        public ObservableCollection<DataItems> DataItems { get; set; }
+        public ObservableCollection<DataItems> FilteredDataItems { get; set; }
+
         public WindowRadiator()
         {
             InitializeComponent();
+            FilteredDataItems = new ObservableCollection<DataItems>(DataItems.Where(item => item.dataItemsRadiatorId.HasValue));
+            myItemsControl.ItemsSource = FilteredDataItems;
         }
         private void Menu_Click(object sender, RoutedEventArgs e)
         {

@@ -12,19 +12,46 @@ namespace TeploKor.Helper
 {
     public class DataItemsCart : INotifyPropertyChanged
     {
-        public string dataItemsCartImageSource { get; set; }
-        public string dataItemsCartName { get; set; }
-        public decimal dataItemsCartPrice { get; set; }
+        private string _imageSource;
+        private string _name;
+        private decimal _price;
+        public string dataItemsCartImageSource
+        {
+            get { return _imageSource; }
+            set
+            {
+                _imageSource = value;
+                OnPropertyChanged("dataItemsCartImageSource");
+            }
+        }
+        public string dataItemsCartName
+        {
+            get { return _name; }
+            set
+            {
+                _name = value;
+                OnPropertyChanged("dataItemsCartName");
+            }
+        }
+        public decimal dataItemsCartPrice
+        {
+            get { return _price; }
+            set
+            {
+                _price = value;
+                OnPropertyChanged("dataItemsCartPrice");
+            }
+        }
         [ForeignKey("Radiator")]
-        public int dataItemsRadiatorId { get; set; }
+        public int? dataItemsRadiatorId { get; set; }
         [ForeignKey("Boiler")]
-        public int dataItemsBoilerId { get; set; }
+        public int? dataItemsBoilerId { get; set; }
         [ForeignKey("Pipes")]
-        public int dataItemsPipesId { get; set; }
+        public int? dataItemsPipesId { get; set; }
         [ForeignKey("Substrate")]
-        public int dataItemsSubstrateId { get; set; }
+        public int? dataItemsSubstrateId { get; set; }
         [ForeignKey("WarmFloor")]
-        public int dataItemsWarmFloorId { get; set; }
+        public int? dataItemsWarmFloorId { get; set; }
         public DataItemsCart() { }
         public DataItemsCart(string dataItemsCartImageSource, string dataItemsCartName, decimal dataItemsCartPrice, int dataItemsRadiatorId, int dataItemsBoilerId, int dataItemsPipesId, int dataItemsSubstrateId, int dataItemsWarmFloorId)
         {

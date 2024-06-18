@@ -12,6 +12,7 @@ namespace TeploKor.Model
 {
     public class Order : INotifyPropertyChanged
     {
+        private string _dMethod;
         [Key]
         public int orderId { get; set; }
         public string orderDeliveryMethod { get; set; }

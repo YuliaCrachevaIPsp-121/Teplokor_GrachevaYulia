@@ -11,14 +11,69 @@ namespace TeploKor.Model
 {
     public class Client : INotifyPropertyChanged
     {
+        private string _surname;
+        private string _email;
+        private string _password;
+        private string _name;
+        private string? _patronymic;
+        private string? _phone;
+
         [Key]
         public int clientId { get; set; }
-        public string clientSurname { get; set; }
-        public string clientName { get; set; }
-        public string? clientPatronymic { get; set; }
-        public string? clientContactNumber { get; set; }
-        public string? clientEmail {  get; set; }
-        public string clientPassword { get; set; }
+        public string clientSurname
+        {
+            get { return _surname; }
+            set
+            {
+                _surname = value;
+                OnPropertyChanged("clientSurname");
+            }
+        }
+        public string clientName
+        {
+            get { return _name; }
+            set
+            {
+                _name = value;
+                OnPropertyChanged("clientName");
+            }
+        }
+        public string? clientPatronymic
+        {
+            get { return _patronymic; }
+            set
+            {
+                _patronymic = value;
+                OnPropertyChanged("clientPatronymic");
+            }
+        }
+        public string? clientContactNumber
+        {
+            get { return _phone; }
+            set
+            {
+                _phone = value;
+                OnPropertyChanged("clientContactNumber");
+            }
+        }
+        public string? clientEmail
+        {
+            get { return _email; }
+            set
+            {
+                _email = value;
+                OnPropertyChanged("clientEmail");
+            }
+        }
+        public string clientPassword
+        {
+            get { return _password; }
+            set
+            {
+                _password = value;
+                OnPropertyChanged("clientPassword");
+            }
+        }
         public Client() { }
         public Client(int clientId, string clientSurname, string clientName, string? clientPatronymic, string? clientContactNumber, string? clientEmail, string clientPassword)
         {

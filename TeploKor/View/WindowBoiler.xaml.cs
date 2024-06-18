@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -17,15 +18,19 @@ namespace TeploKor.View
 {
     public partial class WindowBoiler : Window
     {
+        public ObservableCollection<DataItems> DataItems { get; set; }
+        public ObservableCollection<DataItems> FilteredDataItems { get; set; }
+
         public WindowBoiler()
         {
             InitializeComponent();
+            FilteredDataItems = new ObservableCollection<DataItems>(DataItems.Where(item => item.dataItemsBoilerId.HasValue));
+            myItemsControl.ItemsSource = FilteredDataItems;
         }
         private void Menu_Click(object sender, RoutedEventArgs e)
         {
             WindowMenu menu = new WindowMenu();
 
-            // Проверяем роль пользователя и добавляем соответствующие кнопки в меню
             if (CurrentUser.IsEmployee == true)
             {
                 menu.OrdersButton.Visibility = Visibility.Visible;
