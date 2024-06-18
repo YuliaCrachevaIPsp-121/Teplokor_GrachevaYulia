@@ -53,6 +53,10 @@ namespace TeploKor.Model
             this.employeePassword = employeePassword;
             this.employeeContactNumber = employeeContactNumber;
         }
+        public Employee ShallowCopy()
+        {
+            return (Employee)this.MemberwiseClone();
+        }
 
         public event PropertyChangedEventHandler PropertyChanged;
         protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = "")

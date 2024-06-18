@@ -8,6 +8,8 @@ using System.Text;
 using System.Threading.Tasks;
 using TeploKor.Helper;
 using TeploKor.Model;
+using TeploKor.View;
+using System.Windows;
 
 namespace TeploKor.ViewModel
 {
@@ -31,7 +33,7 @@ namespace TeploKor.ViewModel
         public EmployeeViewModel()
         {
             // Строка подключения к SQLite
-            string connectionString = "Data Source=D:\\Interpol\\interpolApp\\interpolApp\\BD\\interpolBD.db";
+            string connectionString = "Data Source=D:\\TeploKor\\TeploKor\\BD\\TeploKor.db";
 
             List<Employee> employees = MyDbContext.GetEntities<Employee>(connectionString, "SELECT * FROM Employee");
 
@@ -47,84 +49,102 @@ namespace TeploKor.ViewModel
                 return editEmployee ??
                 (editEmployee = new RelayCommand(obj =>
                 {
-                    WindowNewGroup wnGroup = new WindowNewGroup
-                    { Title = "Редактирование группировка" };
+                    WindowNewEmployee wnEmployee = new WindowNewEmployee
+                    { Title = "Редактирование сотрудника" };
 
-                    CriminalGroup criminalGroup = SelectedCriminalGroup;
-                    CriminalGroup tempCriminalGroup = new CriminalGroup();
+                    Employee employee = SelectedEmployee;
+                    Employee tempEmployee = new Employee();
 
-                    tempCriminalGroup = criminalGroup.ShallowCopy();
-                    wnGroup.DataContext = tempCriminalGroup;
-                    if (wnGroup.ShowDialog() == true)
+                    tempEmployee = employee.ShallowCopy();
+                    wnEmployee.DataContext = tempEmployee;
+                    if (wnEmployee.ShowDialog() == true)
                     {
-                        criminalGroup.CriminalGroupId = tempCriminalGroup.CriminalGroupId;
-                        criminalGroup.CriminalGroupName = tempCriminalGroup.CriminalGroupName;
+                        employee.employeeId = tempEmployee.employeeId;
+                        employee.employeeChildrenBirthCertificateNumber = tempEmployee.employeeChildrenBirthCertificateNumber;
+                        employee.employeeContactNumber = tempEmployee.employeeContactNumber;
+                        employee.employeeEducation = tempEmployee.employeeEducation;
+                        employee.employeeNumberPassport = tempEmployee.employeeNumberPassport;
+                        employee.employeeSurname = tempEmployee.employeeSurname;
+                        employee.employeeName = tempEmployee.employeeName;
+                        employee.employeePatronymic = tempEmployee.employeePatronymic;
+                        employee.employeeEducationNumber = tempEmployee.employeeEducationNumber;
+                        employee.employeeNumberWorkBook = tempEmployee.employeeNumberWorkBook;
+                        employee.employeeNumberOfMilitaryId = tempEmployee.employeeNumberOfMilitaryId;
+                        employee.employeeEducationSeries = tempEmployee.employeeEducationSeries;
+                        employee.employeeEmail = tempEmployee.employeeEmail;
+                        employee.employeeLogin = tempEmployee.employeeLogin;
+                        employee.employeePassword = tempEmployee.employeePassword;
+                        employee.employeeSeriesOfMilitaryId = tempEmployee.employeeSeriesOfMilitaryId;
+                        employee.employeeSeriesWorkBook = tempEmployee.employeeSeriesWorkBook;
+                        employee.IsAdmin = tempEmployee.IsAdmin;
+                        employee.employeeSeriesPassport = tempEmployee.employeeSeriesPassport;
+
                         MyDbContext dbContext = new MyDbContext();
-                        dbContext.UpdateEntity<CriminalGroup>(tempCriminalGroup);
+                        dbContext.UpdateEntity<Employee>(tempEmployee);
                     }
-                }, (obj) => SelectedCriminalGroup != null && ListCriminalGroup.Count > 0));
+                }, (obj) => SelectedEmployee != null && ListEmployee.Count > 0));
             }
         }
 
 
-        private CriminalGroup selectedCriminalGroup;
-        public CriminalGroup SelectedCriminalGroup
+        private Employee selectedEmployee;
+        public Employee SelectedEmployee
         {
             get
             {
-                return selectedCriminalGroup;
+                return selectedEmployee;
             }
             set
             {
-                selectedCriminalGroup = value;
-                OnPropertyChanged("SelectedCriminalGroup");
-                EditCriminalGroup.CanExecute(true);
+                selectedEmployee = value;
+                OnPropertyChanged("SelectedEmployee");
+                EditEmployee.CanExecute(true);
             }
         }
 
-        private RelayCommand addCriminalGroup;
-        public RelayCommand AddCriminalGroup
+        private RelayCommand addEmployee;
+        public RelayCommand AddEmployee
         {
             get
             {
-                return addCriminalGroup ??
-                 (addCriminalGroup = new RelayCommand(obj =>
+                return addEmployee ??
+                 (addEmployee = new RelayCommand(obj =>
                  {
-                     WindowNewGroup wnGroup = new WindowNewGroup
+                     WindowNewEmployee wnEmployee = new WindowNewEmployee
                      {
-                         Title = "Новая группировка",
+                         Title = "Новый сотрудник",
                      };
-                     int maxIdCriminalGroup = MaxId() + 1;
-                     CriminalGroup criminalGroup = new CriminalGroup { CriminalGroupId = maxIdCriminalGroup };
-                     wnGroup.DataContext = criminalGroup;
-                     if (wnGroup.ShowDialog() == true)
+                     int maxIdEmployee = MaxId() + 1;
+                     Employee employee = new Employee { employeeId = maxIdEmployee };
+                     wnEmployee.DataContext = employee;
+                     if (wnEmployee.ShowDialog() == true)
                      {
-                         ListCriminalGroup.Add(criminalGroup);
+                         ListEmployee.Add(employee);
                          MyDbContext dbContext = new MyDbContext();
-                         dbContext.SaveEntity<CriminalGroup>(dbContext, criminalGroup);
+                         dbContext.SaveEntity<Employee>(dbContext, employee);
                      }
-                     SelectedCriminalGroup = criminalGroup;
+                     SelectedEmployee = employee;
                  }));
             }
         }
 
-        private RelayCommand deleteCriminalGroup;
-        public RelayCommand DeleteCriminalGroup
+        private RelayCommand deleteEmployee;
+        public RelayCommand DeleteEmployee
         {
             get
             {
-                return deleteCriminalGroup ??
-                (deleteCriminalGroup = new RelayCommand(obj =>
+                return deleteEmployee ??
+                (deleteEmployee = new RelayCommand(obj =>
                 {
-                    CriminalGroup criminalGroup = SelectedCriminalGroup;
-                    MessageBoxResult result = MessageBox.Show("Удалить данные по группировке: " + criminalGroup.CriminalGroupName, "Предупреждение", MessageBoxButton.OKCancel, MessageBoxImage.Warning);
+                    Employee employee = SelectedEmployee;
+                    MessageBoxResult result = MessageBox.Show("Удалить данные по сотруднику: " + employee.employeeSurname + " " + employee.employeeName + " " + employee.employeePatronymic, "Предупреждение", MessageBoxButton.OKCancel, MessageBoxImage.Warning);
                     if (result == MessageBoxResult.OK)
                     {
-                        ListCriminalGroup.Remove(criminalGroup);
+                        ListEmployee.Remove(employee);
                         MyDbContext dbContext = new MyDbContext();
-                        dbContext.DeleteEntityFromDatabase<CriminalGroup>(criminalGroup);
+                        dbContext.DeleteEntityFromDatabase<Employee>(employee);
                     }
-                }, (obj) => SelectedCriminalGroup != null && ListCriminalGroup.Count > 0));
+                }, (obj) => SelectedEmployee != null && ListEmployee.Count > 0));
             }
         }
 

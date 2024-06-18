@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace TeploKor.Model
 {
-    class DataItems
+    public class DataItems
     {
     }
 }

@@ -14,9 +14,12 @@ using System.Windows.Shapes;
 
 namespace TeploKor.View
 {
-    public partial class WindowMenu : Window
+    /// <summary>
+    /// Логика взаимодействия для WindowCart.xaml
+    /// </summary>
+    public partial class WindowCart : Window
     {
-        public WindowMenu()
+        public WindowCart()
         {
             InitializeComponent();
         }
