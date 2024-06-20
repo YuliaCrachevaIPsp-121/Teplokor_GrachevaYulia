@@ -75,7 +75,7 @@
                                 <Image Source="{Binding dataItemsImageSource}" Width="230" Height="230" Grid.Column="0" VerticalAlignment="Top"></Image>
                                 <TextBlock Text="{Binding dataItemsName}" FontSize="18"></TextBlock>
                                 <Button Content="Подробнее" FontSize="14" Foreground="White" Background="#5A6986" Click="MoreInfo_Click"/>
-                                <Button Content="В корзину" FontSize="14" Foreground="White" Background="#5A6986" Click="AddToCart_Click"/>
+                                <Button Click="AddToCart_Click" Content="В корзину" FontSize="14" Foreground="White" Background="#5A6986"/>
                             </StackPanel>
                         </Grid>
                     </DataTemplate>

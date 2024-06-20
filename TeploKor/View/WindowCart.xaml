@@ -53,31 +53,41 @@
         <Button  Background="#4183A6" Foreground="White" Style="{StaticResource RoundCornerButton}" FontSize="20" Content="Удалить все" Grid.Column="1" Grid.Row="2" Margin="0,3,360,3"/>
 
         <ScrollViewer Margin="10,2,68,12" Grid.Row="3" Grid.ColumnSpan="2">
-            <ItemsControl ItemsSource="{Binding DataItemsCart}" Background="White">
+            <ItemsControl ItemsSource="{Binding Cart}" Background="White">
                 <ItemsControl.ItemsPanel>
                     <ItemsPanelTemplate>
-                        <UniformGrid Columns="1"/>
+                        <StackPanel Orientation="Vertical"/>
                     </ItemsPanelTemplate>
                 </ItemsControl.ItemsPanel>
                 <ItemsControl.ItemTemplate>
                     <DataTemplate>
-                        <Grid>
+                        <Grid Margin="5">
                             <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="750"></ColumnDefinition>
-                                <ColumnDefinition Width="25"></ColumnDefinition>
+                                <ColumnDefinition Width="auto"/>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="auto"/>
                             </Grid.ColumnDefinitions>
                             <Grid.RowDefinitions>
-                                <RowDefinition></RowDefinition>
+                                <RowDefinition Height="auto"/>
+                                <RowDefinition Height="auto"/>
                             </Grid.RowDefinitions>
-                            <StackPanel Orientation="Horizontal">
-                                <TextBlock Text="{Binding dateOrder}" FontSize="18"></TextBlock>
-                                <Button Content="Подробнее" FontSize="14" Foreground="White" Background="#5A6986" Click="MoreInfo_Click"/>
+
+                            <Border Grid.ColumnSpan="3" CornerRadius="5" Background="#E1F5FF" Padding="5"/>
+
+                            <Image Grid.Column="0" Source="{Binding cartImageSource}" Width="100" Height="100" Margin="5"/>
+
+                            <StackPanel Grid.Column="1" VerticalAlignment="Center" Margin="5">
+                                <TextBlock Text="{Binding cartName}" FontSize="18" TextWrapping="Wrap"/>
+                                <TextBlock Text="{Binding cartPrice, StringFormat=C2}" FontSize="16" Margin="0,5,0,0"/>
                             </StackPanel>
+
+                            <Button Grid.Column="2" Grid.RowSpan="2" Content="X" FontSize="14" Foreground="White" Background="#4183A6" Margin="5" Padding="5" Click="RemoveFromCart_Click"/>
                         </Grid>
                     </DataTemplate>
                 </ItemsControl.ItemTemplate>
             </ItemsControl>
         </ScrollViewer>
+
 
         <Border Background="#E1F5FF" CornerRadius="40" Grid.Row="2" Grid.Column="1" Margin="487,0,-48,10" Grid.RowSpan="2" Grid.ColumnSpan="2">
             <Grid>
@@ -96,14 +106,14 @@
                     <RowDefinition Height="41"></RowDefinition>
                     <RowDefinition Height="59"></RowDefinition>
                 </Grid.RowDefinitions>
-                <TextBlock Text="Всего ... товаров" Margin="10,10,0,0" FontSize="20" Grid.Row="0" Grid.Column="0"></TextBlock>
-                <TextBlock Text="Котлы: ... рублей" Margin="10,10,0,0" FontSize="20" Grid.Row="1" Grid.Column="0"></TextBlock>
-                <TextBlock Text="Радиаторы: ... рублей" Margin="10,10,0,0" FontSize="20" Grid.Row="2" Grid.Column="0"></TextBlock>
-                <TextBlock Text="Трубы: ... рублей" Margin="10,10,0,0" FontSize="20" Grid.Row="3" Grid.Column="0"></TextBlock>
-                <TextBlock Text="Дымоходы: ... рублей" Margin="10,10,0,0" FontSize="20" Grid.Row="4" Grid.Column="0"></TextBlock>
-                <TextBlock Text="Теплый пол: ... рублей" Margin="10,10,0,0" FontSize="20" Grid.Row="5" Grid.Column="0"></TextBlock>
+                <TextBlock x:Name="totalProduct" Text="Всего ... товаров" Margin="10,10,0,0" FontSize="20" Grid.Row="0" Grid.Column="0"></TextBlock>
+                <TextBlock x:Name="totalPriceBoiler" Text="Котлы: ... рублей" Margin="10,10,0,0" FontSize="20" Grid.Row="1" Grid.Column="0"></TextBlock>
+                <TextBlock x:Name="totalPriceRediator" Text="Радиаторы: ... рублей" Margin="10,10,0,0" FontSize="20" Grid.Row="2" Grid.Column="0"></TextBlock>
+                <TextBlock x:Name="totalPricePipes" Text="Трубы: ... рублей" Margin="10,10,0,0" FontSize="20" Grid.Row="3" Grid.Column="0"></TextBlock>
+                <TextBlock x:Name="totalPriceSubstrate" Text="Дымоходы: ... рублей" Margin="10,10,0,0" FontSize="20" Grid.Row="4" Grid.Column="0"></TextBlock>
+                <TextBlock x:Name="totalPriceWarmFloor" Text="Теплый пол: ... рублей" Margin="10,10,0,0" FontSize="20" Grid.Row="5" Grid.Column="0"></TextBlock>
 
-                <TextBlock Text="Итог: ... рублей" Margin="10,10,0,0"  FontSize="20" Grid.Column="0" Grid.Row="7"></TextBlock>
+                <TextBlock x:Name="totalPrice"  Text="Итог: ... рублей" Margin="10,10,0,0"  FontSize="20" Grid.Column="0" Grid.Row="7"></TextBlock>
                 <Button Grid.Column="0" Grid.Row="8" Content="Купить все"  Background="#4183A6" Foreground="White" Style="{StaticResource RoundCornerButton}" FontSize="20" Margin="10,10,20,0" ></Button>
             </Grid>
         </Border>

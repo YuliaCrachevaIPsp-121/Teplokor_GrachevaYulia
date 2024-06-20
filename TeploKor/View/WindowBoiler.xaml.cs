@@ -12,6 +12,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using TeploKor.Helper;
 using TeploKor.Model;
 
 namespace TeploKor.View
@@ -45,5 +46,46 @@ namespace TeploKor.View
 
             menu.Show();
         }
+        public CurrentUser CurrentUser { get; private set; } = new CurrentUser();
+        private void AddToCart_Click(object sender, RoutedEventArgs e)
+        {
+            string connectionString = "Data Source=D:\\TeploKor\\TeploKor\\BD\\TeploKor.db";
+            Button button = (Button)sender;
+
+            DataItems item = (DataItems)button.DataContext;
+
+            int? boilerId = 0;
+            int itemId = item.dataItemsId;
+            if (itemId != null)
+            {
+                boilerId = item.dataItemsBoilerId;
+            }
+
+            try
+            {
+                using (var context = new MyDbContext())
+                {
+                    var boiler = context.Boiler.FirstOrDefault(b => b.boilerId == boilerId);
+
+                    if (boiler != null)
+                    {
+                        var cart = new Cart();
+                        cart.cartName = boiler.boilerName;
+                        cart.cartPrice = boiler.boilerPrice;
+                        cart.cartImageSource = boiler.boilerImageSource;
+                        cart.clientId = CurrentUser.UserId; // здесь предполагается, что есть доступ к текущему пользователю
+
+                        context.Cart.Add(cart);
+                        context.SaveChanges();
+                    }
+                }
+
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Возникла ошибка при добавлении в корзину: " + ex.Message);
+            }
+        }
+
     }
 }

@@ -14,14 +14,15 @@ using System.Windows.Shapes;
 
 namespace TeploKor.View
 {
-    /// <summary>
-    /// Логика взаимодействия для WindowCart.xaml
-    /// </summary>
     public partial class WindowCart : Window
     {
         public WindowCart()
         {
             InitializeComponent();
+        }
+        private void RemoveFromCart_Click(object sender, RoutedEventArgs e)
+        {
+
         }
     }
 }

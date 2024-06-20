@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Runtime.CompilerServices;
@@ -13,6 +14,8 @@ namespace TeploKor.Model
     {
         private string _imageSource;
         private string _name;
+        [Key]
+        public int dataItemsId { get; set; }
         public string dataItemsImageSource 
         {
             get { return _imageSource; }
@@ -41,6 +44,7 @@ namespace TeploKor.Model
         public int? dataItemsSubstrateId { get; set; }
         [ForeignKey("WarmFloor")]
         public int? dataItemsWarmFloorId { get; set; }
+
         public DataItems() { }
         public DataItems(string dataItemsImageSource, string dataItemsName, int? dataItemsRadiatorId, int? dataItemsBoilerId, int? dataItemsPipesId, int? dataItemsSubstrateId, int? dataItemsWarmFloorId)
         {

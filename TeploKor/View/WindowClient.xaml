@@ -54,16 +54,16 @@
                     <RowDefinition Height="Auto"/>
                 </Grid.RowDefinitions>
                 <StackPanel Grid.Row="0" Margin="10,20,10,20">
-                    <TextBlock Text="Текст" FontSize="24"></TextBlock>
-                    <TextBlock Text="Текст" FontSize="18"></TextBlock>
-                    <TextBlock Text="Текст" FontSize="18"></TextBlock>
+                    <TextBlock x:Name="FullNameTextBlock" Text="{Binding FullName}" FontSize="24"/>
+                    <TextBlock x:Name="EmailTextBlock" Text="{Binding Email}" FontSize="18"/>
+                    <TextBlock x:Name="PhoneNumberTextBlock" Text="{Binding PhoneNumber}" FontSize="18"/>
                 </StackPanel>
                 <StackPanel Grid.Row="1" HorizontalAlignment="Left" Margin="617,0,0,10" Width="123">
-                    <Button Style="{StaticResource RoundCornerButton}" Content="История заказов"></Button>
+                    <Button  x:Name="HistoryButton" Click="History_Click" Style="{StaticResource RoundCornerButton}" Content="История заказов"></Button>
                     <TextBlock Width="10"/>
-                    <Button Style="{StaticResource RoundCornerButton}" Content="Изменить"></Button>
+                    <Button  Style="{StaticResource RoundCornerButton}" Content="Изменить"></Button>
                     <TextBlock Width="10"/>
-                    <Button Style="{StaticResource RoundCornerButton}" Content="Удалить"></Button>
+                    <Button x:Name="DeleteButton" Click="Delete_Click"  Style="{StaticResource RoundCornerButton}" Content="Удалить"></Button>
                 </StackPanel>
             </Grid>
         </Border>

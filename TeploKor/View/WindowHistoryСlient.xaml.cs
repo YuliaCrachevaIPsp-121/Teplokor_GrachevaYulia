@@ -17,7 +17,7 @@ namespace TeploKor.View
 {
     public partial class WindowHistoryСlient : Window
     {
-        public WindowHistoryСlient()
+        public WindowHistoryСlient(int? clientId)
         {
             InitializeComponent();
         }

@@ -86,5 +86,23 @@
         <TextBlock Text="Серия трудовой книжки: " Grid.Column="5" Grid.Row="10" VerticalAlignment="Center" FontSize="14"></TextBlock>
         <TextBlock Text="Номер военного билета: " Grid.Column="5" Grid.Row="12" VerticalAlignment="Center" FontSize="14"></TextBlock>
         <TextBlock Text="Серия военного билета: " Grid.Column="5" Grid.Row="14" VerticalAlignment="Center" FontSize="14"></TextBlock>
+
+        <TextBox Grid.Column="3" Grid.Row="2" />
+        <TextBox Grid.Column="3" Grid.Row="4" />
+        <TextBox Grid.Column="3" Grid.Row="6" />
+        <TextBox Grid.Column="3" Grid.Row="8" />
+        <TextBox Grid.Column="3" Grid.Row="10" />
+        <TextBox Grid.Column="3" Grid.Row="12" />
+        <TextBox Grid.Column="3" Grid.Row="14" />
+        <TextBox Grid.Column="7" Grid.Row="2" />
+        <TextBox Grid.Column="7" Grid.Row="4" />
+        <TextBox Grid.Column="7" Grid.Row="6" />
+        <TextBox Grid.Column="7" Grid.Row="8" />
+        <TextBox Grid.Column="7" Grid.Row="10" />
+        <TextBox Grid.Column="7" Grid.Row="12" />
+        <TextBox Grid.Column="7" Grid.Row="14" />
+
+        <Button Content="Отменить" Style="{StaticResource RoundCornerButton}" Grid.Column="1" Grid.Row="16" />
+        <Button Content="Сохранить" Style="{StaticResource RoundCornerButton}" Grid.Column="7" Grid.Row="16" />
     </Grid>
 </Window>

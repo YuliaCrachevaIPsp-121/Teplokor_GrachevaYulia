@@ -18,6 +18,8 @@ namespace TeploKor.View
 {
     public partial class WindowEntrance : Window
     {
+        public int? ClientId { get; private set; }
+        public int? EmployeeId { get; private set; }
         public WindowEntrance()
         {
             InitializeComponent();
@@ -30,6 +32,7 @@ namespace TeploKor.View
             this.Close();
         }
 
+        public CurrentUser CurrentUser { get; private set; } = new CurrentUser();
         private void LoginButton_Click(object sender, RoutedEventArgs e)
         {
             string login = LoginTextBox.Text.Trim();
@@ -41,9 +44,11 @@ namespace TeploKor.View
                 Client client = db.Client.FirstOrDefault(c => c.clientEmail == login && c.clientPassword == password);
                 if (client != null)
                 {
+                    CurrentUser.IsClient = true;
+                    CurrentUser.UserId = client.clientId; // Assign the UserId property here
                     MessageBox.Show($"Добро пожаловать, {client.clientSurname} {client.clientName}!");
-                    WindowBoiler windowBoiler = new WindowBoiler();
-                    windowBoiler.Show();
+                    WindowClient windowClient = new WindowClient();
+                    windowClient.Show();
                     this.Close();
                     return;
                 }
@@ -52,18 +57,19 @@ namespace TeploKor.View
                 Employee employee = db.Employee.FirstOrDefault(e => e.employeeLogin == login && e.employeePassword == password);
                 if (employee != null)
                 {
+                    CurrentUser.UserId = employee.employeeId; // Assign the UserId property here
                     if (employee.IsAdmin)
                     {
                         MessageBox.Show($"Добро пожаловать, администратор {employee.employeeSurname} {employee.employeeName}!");
-                        WindowEmployee windowEmployee = new WindowEmployee();
-                        windowEmployee.Show();
+                        WindowClient windowClient = new WindowClient();
+                        windowClient.Show();
                         this.Close();
                     }
                     else
                     {
                         MessageBox.Show($"Добро пожаловать, сотрудник {employee.employeeSurname} {employee.employeeName}!");
-                        WindowEmployeeControl windowEmployee = new WindowEmployeeControl();
-                        windowEmployee.Show();
+                        WindowClient windowClient = new WindowClient();
+                        windowClient.Show();
                         this.Close();
                     }
                     return;

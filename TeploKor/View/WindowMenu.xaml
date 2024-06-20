@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:TeploKor.View"
         mc:Ignorable="d"
-        Title="WindowMenu" Height="300" Width="200" Background="#FFF7E0">
+        Title="WindowMenu" Height="400" Width="200" Background="#FFF7E0">
     <Window.Resources>
         <Style x:Key="FlatButtonStyle" TargetType="Button">
             <Setter Property="Background" Value="Transparent"/>
@@ -40,12 +40,13 @@
             <Button Content="Бойлер" Click="Boiler_Click" Style="{StaticResource FlatButtonStyle}"/>
             <Button Content="Трубы" Click="Pipes_Click" Style="{StaticResource FlatButtonStyle}"/>
             <Button Content="Теплый пол" Click="WarmFloor_Click" Style="{StaticResource FlatButtonStyle}"/>
-            <Button Content="Радиаторы" Click="Radiators_Click" Style="{StaticResource FlatButtonStyle}"/>
+            <Button Content="Радиаторы" Click="Radiator_Click" Style="{StaticResource FlatButtonStyle}"/>
             <Button Content="Дымоход" Click="Chimney_Click" Style="{StaticResource FlatButtonStyle}"/>
             <Button x:Name="OrdersButton" Content="Заказы клиентов" Click="Orders_Click" Visibility="Collapsed" Style="{StaticResource FlatButtonStyle}"/>
             <Button x:Name="ProductsButton" Content="Управление товарами" Click="Products_Click" Visibility="Collapsed" Style="{StaticResource FlatButtonStyle}"/>
             <Button x:Name="EmployeesButton" Content="Сотрудники" Click="Employees_Click" Visibility="Collapsed" Style="{StaticResource FlatButtonStyle}"/>
-            <Button Content="Выход" Click="Exit_Click" Style="{StaticResource FlatButtonStyle}" VerticalAlignment="Bottom" Margin="0,10,0,10"/>
+            <Button x:Name="ProductButton" Content="Управление товарами" Click="Product_Click" Visibility="Collapsed" Style="{StaticResource FlatButtonStyle}"/>
+            <Button Content="Выход" Click="Exit_Click" Style="{StaticResource FlatButtonStyle}"/>
         </StackPanel>
     </Grid>
 </Window>
