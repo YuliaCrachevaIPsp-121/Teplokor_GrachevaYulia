@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:TeploKor.View"
         mc:Ignorable="d"
-        Title="WindowCart" Height="550" Width="800">
+        Title="WindowCart" Height="700" Width="1200">
     <Window.Resources>
         <Style TargetType="Button" x:Key="RoundCornerButton">
             <Setter Property="Background" Value="LightBlue"/>
@@ -29,6 +29,32 @@
                 </Trigger>
             </Style.Triggers>
         </Style>
+        <Style x:Key="FlatButtonStyle" TargetType="Button">
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="BorderBrush" Value="Transparent"/>
+            <Setter Property="Foreground" Value="Black"/>
+            <Setter Property="FontSize" Value="18"/>
+            <Setter Property="Margin" Value="0,5,0,5"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="0">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Background" Value="#FFF7E0"/>
+                    <Setter Property="Foreground" Value="Black"/>
+                </Trigger>
+                <Trigger Property="IsPressed" Value="True">
+                    <Setter Property="Background" Value="#FFE6D3"/>
+                    <Setter Property="Foreground" Value="Black"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
     </Window.Resources>
 
     <Grid>
@@ -43,17 +69,17 @@
             <RowDefinition Height="50"></RowDefinition>
             <RowDefinition Height="425"></RowDefinition>
         </Grid.RowDefinitions>
-        <StackPanel Background="#FFF7E0" Grid.ColumnSpan="3"></StackPanel>
+        <StackPanel Background="#FFF7E0" Grid.ColumnSpan="3" Margin="0,0,-400,0"></StackPanel>
 
         <Image HorizontalAlignment="Left" Source="../res/img/logo.png" Height="50" Width="92" Grid.ColumnSpan="2"></Image>
-        <Button Click="Menu_Click" Grid.Column="1" BorderBrush="Transparent" Background="#FFF7E0" Content="Меню" FontSize="18" Margin="707,0,0,0" Grid.ColumnSpan="2"></Button>
+        <Button Click="Menu_Click" Grid.Column="2" BorderBrush="Transparent" Background="#FFF7E0" Content="Меню" FontSize="18" Margin="557,0,-400,0"/>
 
         <TextBlock Text="Корзина"  FontSize="24" Margin="0,43,3,1" Grid.ColumnSpan="2" Grid.RowSpan="2"/>
 
         <Button  Background="#4183A6" Foreground="White" Style="{StaticResource RoundCornerButton}" FontSize="20" Content="Удалить все" Grid.Column="1" Grid.Row="2" Margin="0,3,360,3"/>
 
-        <ScrollViewer Margin="10,2,68,12" Grid.Row="3" Grid.ColumnSpan="2">
-            <ItemsControl ItemsSource="{Binding Cart}" Background="White">
+        <ScrollViewer Margin="10,2,-59,-134" Grid.Row="3" Grid.ColumnSpan="3">
+            <ItemsControl x:Name="myItemsControl" ItemsSource="{Binding FilteredDataItemsCart}" Background="White">
                 <ItemsControl.ItemsPanel>
                     <ItemsPanelTemplate>
                         <StackPanel Orientation="Vertical"/>
@@ -74,11 +100,11 @@
 
                             <Border Grid.ColumnSpan="3" CornerRadius="5" Background="#E1F5FF" Padding="5"/>
 
-                            <Image Grid.Column="0" Source="{Binding cartImageSource}" Width="100" Height="100" Margin="5"/>
+                            <Image Grid.Column="0" Source="{Binding dataItemsCartImageSource}" Width="100" Height="100" Margin="5"/>
 
                             <StackPanel Grid.Column="1" VerticalAlignment="Center" Margin="5">
-                                <TextBlock Text="{Binding cartName}" FontSize="18" TextWrapping="Wrap"/>
-                                <TextBlock Text="{Binding cartPrice, StringFormat=C2}" FontSize="16" Margin="0,5,0,0"/>
+                                <TextBlock Text="{Binding dataItemsCartName}" FontSize="18" TextWrapping="Wrap"/>
+                                <TextBlock Text="{Binding dataItemsCartPrice}" FontSize="16" Margin="0,5,0,0"/>
                             </StackPanel>
 
                             <Button Grid.Column="2" Grid.RowSpan="2" Content="X" FontSize="14" Foreground="White" Background="#4183A6" Margin="5" Padding="5" Click="RemoveFromCart_Click"/>
@@ -88,8 +114,7 @@
             </ItemsControl>
         </ScrollViewer>
 
-
-        <Border Background="#E1F5FF" CornerRadius="40" Grid.Row="2" Grid.Column="1" Margin="487,0,-48,10" Grid.RowSpan="2" Grid.ColumnSpan="2">
+        <Border Background="#E1F5FF" CornerRadius="40" Grid.Column="2" Margin="289,46,-400,-134" Grid.RowSpan="4">
             <Grid>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition/>
@@ -103,19 +128,29 @@
                     <RowDefinition Height="50"></RowDefinition>
                     <RowDefinition Height="50"></RowDefinition>
                     <RowDefinition Height="50"></RowDefinition>
-                    <RowDefinition Height="41"></RowDefinition>
+                    <RowDefinition Height="100"></RowDefinition>
+                    <RowDefinition Height="50"></RowDefinition>
+                    <RowDefinition Height="50"></RowDefinition>
                     <RowDefinition Height="59"></RowDefinition>
                 </Grid.RowDefinitions>
                 <TextBlock x:Name="totalProduct" Text="Всего ... товаров" Margin="10,10,0,0" FontSize="20" Grid.Row="0" Grid.Column="0"></TextBlock>
-                <TextBlock x:Name="totalPriceBoiler" Text="Котлы: ... рублей" Margin="10,10,0,0" FontSize="20" Grid.Row="1" Grid.Column="0"></TextBlock>
-                <TextBlock x:Name="totalPriceRediator" Text="Радиаторы: ... рублей" Margin="10,10,0,0" FontSize="20" Grid.Row="2" Grid.Column="0"></TextBlock>
-                <TextBlock x:Name="totalPricePipes" Text="Трубы: ... рублей" Margin="10,10,0,0" FontSize="20" Grid.Row="3" Grid.Column="0"></TextBlock>
-                <TextBlock x:Name="totalPriceSubstrate" Text="Дымоходы: ... рублей" Margin="10,10,0,0" FontSize="20" Grid.Row="4" Grid.Column="0"></TextBlock>
-                <TextBlock x:Name="totalPriceWarmFloor" Text="Теплый пол: ... рублей" Margin="10,10,0,0" FontSize="20" Grid.Row="5" Grid.Column="0"></TextBlock>
-
-                <TextBlock x:Name="totalPrice"  Text="Итог: ... рублей" Margin="10,10,0,0"  FontSize="20" Grid.Column="0" Grid.Row="7"></TextBlock>
-                <Button Grid.Column="0" Grid.Row="8" Content="Купить все"  Background="#4183A6" Foreground="White" Style="{StaticResource RoundCornerButton}" FontSize="20" Margin="10,10,20,0" ></Button>
+                
+                <TextBlock x:Name="totalPrice"  Text="На сумму ... рублей" Margin="10,10,0,0"  FontSize="20" Grid.Column="0" Grid.Row="8"></TextBlock>
+                <Button Click="Buy_Click" Grid.Column="0" Grid.Row="10" Content="Купить все"  Background="#4183A6" Foreground="White" Style="{StaticResource RoundCornerButton}" FontSize="20" Margin="10,10,20,0" ></Button>
             </Grid>
+        </Border>
+        <Border Opacity="0" x:Name="MenuBorder" Background="#FFF7E0"  CornerRadius="40" Grid.Row="1" Grid.Column="2" Margin="311,0,-454,-134" Grid.RowSpan="3">
+            <StackPanel>
+                <Button Content="Профиль" Click="Profile_Click" Style="{StaticResource FlatButtonStyle}"/>
+                <Button Content="Бойлер" Click="Boiler_Click" Style="{StaticResource FlatButtonStyle}"/>
+                <Button Content="Радиаторы" Click="Radiator_Click" Style="{StaticResource FlatButtonStyle}"/>
+                <Button Content="Корзина" Click="Cart_Click" Style="{StaticResource FlatButtonStyle}"/>
+                <Button x:Name="OrdersButton" Content="Заказы клиентов" Click="Orders_Click" Visibility="Collapsed" Style="{StaticResource FlatButtonStyle}"/>
+                <Button x:Name="ProductsButton" Content="Управление товарами" Click="Products_Click" Visibility="Collapsed" Style="{StaticResource FlatButtonStyle}"/>
+                <Button x:Name="EmployeesButton" Content="Сотрудники" Click="Employees_Click" Visibility="Collapsed" Style="{StaticResource FlatButtonStyle}"/>
+                <Button x:Name="ProductButton" Content="Управление товарами" Click="Product_Click" Visibility="Collapsed" Style="{StaticResource FlatButtonStyle}"/>
+                <Button Content="Выход" Click="Exit_Click" Style="{StaticResource FlatButtonStyle}"/>
+            </StackPanel>
         </Border>
     </Grid>
 </Window>

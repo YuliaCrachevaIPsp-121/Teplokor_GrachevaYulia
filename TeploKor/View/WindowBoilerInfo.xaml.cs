@@ -11,45 +11,58 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using TeploKor.Model;
 
 namespace TeploKor.View
 {
-    public partial class WindowMenu : Window
+    public partial class WindowBoilerInfo : Window
     {
-        public WindowMenu()
+        private CurrentUser currentUser;
+        public WindowBoilerInfo(Boiler selectedBoiler, CurrentUser currentUser)
         {
             InitializeComponent();
+            this.currentUser = currentUser;
+        }
+        private void Menu_Click(object sender, RoutedEventArgs e)
+        {
+            if (MenuBorder.Opacity == 0)
+            {
+                // делаем меню видимым
+                MenuBorder.Opacity = 1;
+            }
+            else
+            {
+                // делаем меню невидимым
+                MenuBorder.Opacity = 0;
+            }
         }
 
         private void Profile_Click(object sender, RoutedEventArgs e)
         {
-            WindowClient windowClient = new WindowClient();
+            WindowClient windowClient = new WindowClient(currentUser);
             windowClient.Show();
             this.Close();
         }
-
-        private void Boiler_Click (object sender, RoutedEventArgs e)
+        private void Cart_Click(object sender, RoutedEventArgs e)
         {
-            WindowBoiler windowBoiler = new WindowBoiler();
-            windowBoiler.Show();
+            WindowCart windowCart = new WindowCart(currentUser);
+            windowCart.Show();
             this.Close();
         }
-        private void Pipes_Click(object sender, RoutedEventArgs e)
+        private void Exit_Click(object sender, RoutedEventArgs e)
         {
-            WindowPipes windowPipes = new WindowPipes();
-            windowPipes.Show();
+            System.Windows.Application.Current.Shutdown();
+        }
+        private void Boiler_Click(object sender, RoutedEventArgs e)
+        {
+            WindowBoiler windowBoiler = new WindowBoiler( currentUser);
+            windowBoiler.Show();
             this.Close();
         }
         private void Radiator_Click(object sender, RoutedEventArgs e)
         {
             WindowRadiator windowRadiator = new WindowRadiator();
             windowRadiator.Show();
-            this.Close();
-        }
-        private void Chimney_Click(object sender, RoutedEventArgs e)
-        {
-            WindowSubstrate windowSubstrate = new WindowSubstrate();
-            windowSubstrate.Show();
             this.Close();
         }
         private void Orders_Click(object sender, RoutedEventArgs e)
@@ -70,5 +83,12 @@ namespace TeploKor.View
             windowEmployee.Show();
             this.Close();
         }
+        private void Product_Click(object sender, RoutedEventArgs e)
+        {
+            WindowEmployeeControl windowEmployeeControl = new WindowEmployeeControl();
+            windowEmployeeControl.Show();
+            this.Close();
+        }
+
     }
 }

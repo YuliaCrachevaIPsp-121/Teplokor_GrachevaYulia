@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:TeploKor.View"
         mc:Ignorable="d"
-        Title="WindowNewEmployee" Height="550" Width="800">
+        Title="WindowNewEmployee" Height="675" Width="800">
     <Window.Resources>
         <Style TargetType="Button" x:Key="RoundCornerButton">
             <Setter Property="Background" Value="LightBlue"/>
@@ -62,6 +62,10 @@
             <RowDefinition Height="25"></RowDefinition>
             <RowDefinition Height="35"></RowDefinition>
             <RowDefinition Height="25"></RowDefinition>
+            <RowDefinition Height="35"></RowDefinition>
+            <RowDefinition Height="25"></RowDefinition>
+            <RowDefinition Height="35"></RowDefinition>
+            <RowDefinition Height="25"></RowDefinition>
         </Grid.RowDefinitions>
 
         <StackPanel Background="#FFF7E0" Grid.ColumnSpan="9" Margin="0,0,-65,0"></StackPanel>
@@ -76,33 +80,67 @@
         <TextBlock Text="Электронная почта: " Grid.Column="1" Grid.Row="10" VerticalAlignment="Center" FontSize="14"></TextBlock>
         <TextBlock Text="Серия паспорта: " Grid.Column="1" Grid.Row="12" VerticalAlignment="Center" FontSize="14"></TextBlock>
         <TextBlock Text="Номер паспорта: " Grid.Column="1" Grid.Row="14" VerticalAlignment="Center" FontSize="14"></TextBlock>
-        
-        
-        
+        <TextBlock Text="Логин: " Grid.Column="1" Grid.Row="16" VerticalAlignment="Center" FontSize="14"></TextBlock>
+        <TextBlock Text="Пароль: " Grid.Column="1" Grid.Row="18" VerticalAlignment="Center" FontSize="14"></TextBlock>
+
         <TextBlock Text="Образование: " Grid.Column="5" Grid.Row="2" VerticalAlignment="Center" FontSize="14"></TextBlock>
         <TextBlock Text="Номер диплома: " TextWrapping="Wrap" Grid.Column="5" Grid.Row="4" VerticalAlignment="Center" FontSize="14" Height="38"></TextBlock>
-        <TextBlock Text="Номер сертификата о рождении детей: " TextWrapping="Wrap" Grid.Column="5" Grid.Row="6" VerticalAlignment="Center" FontSize="14" Height="38"></TextBlock>
-        <TextBlock Text="Номер трудовой книжки: " Grid.Column="5" Grid.Row="8" VerticalAlignment="Center" FontSize="14"></TextBlock>
-        <TextBlock Text="Серия трудовой книжки: " Grid.Column="5" Grid.Row="10" VerticalAlignment="Center" FontSize="14"></TextBlock>
-        <TextBlock Text="Номер военного билета: " Grid.Column="5" Grid.Row="12" VerticalAlignment="Center" FontSize="14"></TextBlock>
-        <TextBlock Text="Серия военного билета: " Grid.Column="5" Grid.Row="14" VerticalAlignment="Center" FontSize="14"></TextBlock>
+        <TextBlock Text="Серия диплома: " TextWrapping="Wrap" Grid.Column="5" Grid.Row="6" VerticalAlignment="Center" FontSize="14" Height="38"></TextBlock>
+        <TextBlock Text="Номер сертификата о рождении детей: " TextWrapping="Wrap" Grid.Column="5" Grid.Row="8" VerticalAlignment="Center" FontSize="14" Height="38"></TextBlock>
+        <TextBlock Text="Номер трудовой книжки: " Grid.Column="5" Grid.Row="10" VerticalAlignment="Center" FontSize="14"></TextBlock>
+        <TextBlock Text="Серия трудовой книжки: " Grid.Column="5" Grid.Row="12" VerticalAlignment="Center" FontSize="14"></TextBlock>
+        <TextBlock Text="Номер военного билета: " Grid.Column="5" Grid.Row="14" VerticalAlignment="Center" FontSize="14"></TextBlock>
+        <TextBlock Text="Серия военного билета: " Grid.Column="5" Grid.Row="16" VerticalAlignment="Center" FontSize="14"></TextBlock>
 
-        <TextBox Grid.Column="3" Grid.Row="2" />
-        <TextBox Grid.Column="3" Grid.Row="4" />
-        <TextBox Grid.Column="3" Grid.Row="6" />
-        <TextBox Grid.Column="3" Grid.Row="8" />
-        <TextBox Grid.Column="3" Grid.Row="10" />
-        <TextBox Grid.Column="3" Grid.Row="12" />
-        <TextBox Grid.Column="3" Grid.Row="14" />
-        <TextBox Grid.Column="7" Grid.Row="2" />
-        <TextBox Grid.Column="7" Grid.Row="4" />
-        <TextBox Grid.Column="7" Grid.Row="6" />
-        <TextBox Grid.Column="7" Grid.Row="8" />
-        <TextBox Grid.Column="7" Grid.Row="10" />
-        <TextBox Grid.Column="7" Grid.Row="12" />
-        <TextBox Grid.Column="7" Grid.Row="14" />
+        <TextBox Text="{Binding employeeSurname}" Grid.Column="3" Grid.Row="2" />
+        <TextBox Text="{Binding employeeName}" Grid.Column="3" Grid.Row="4" />
+        <TextBox Text="{Binding employeePatronymic}" Grid.Column="3" Grid.Row="6">
+            <TextBox.ToolTip>
+                <ToolTip Content="Если нет отчества, оставьте поле пустым" />
+            </TextBox.ToolTip>
+        </TextBox>
+        <TextBox Text="{Binding employeeContactNumber}" Grid.Column="3" Grid.Row="8">
+            <TextBox.ToolTip>
+                <ToolTip Content="Номер телефона вводится строго в формате +79000000000" />
+            </TextBox.ToolTip>
+        </TextBox>
 
-        <Button Content="Отменить" Style="{StaticResource RoundCornerButton}" Grid.Column="1" Grid.Row="16" />
-        <Button Content="Сохранить" Style="{StaticResource RoundCornerButton}" Grid.Column="7" Grid.Row="16" />
+        <TextBox Text="{Binding employeeEmail}" Grid.Column="3" Grid.Row="10" />
+        <TextBox Text="{Binding employeeSeriesPassport}" Grid.Column="3" Grid.Row="12">
+            <TextBox.ToolTip>
+                <ToolTip Content="Серия паспорта вводится без запятой или пробела" />
+            </TextBox.ToolTip>
+        </TextBox>
+        <TextBox Text="{Binding employeeNumberPassport}" Grid.Column="3" Grid.Row="14" />
+        <TextBox Text="{Binding employeeLogin}" Grid.Column="3" Grid.Row="16">
+            <TextBox.ToolTip>
+                <ToolTip Content="Логин должен иметь не менее 6 символов" />
+            </TextBox.ToolTip>
+        </TextBox>
+
+        <TextBox Text="{Binding employeePassword}" Grid.Column="3" Grid.Row="18">
+            <TextBox.ToolTip>
+                <ToolTip Content="Пароль должен быть не менее 8 символов" />
+            </TextBox.ToolTip>
+        </TextBox>
+
+        <ComboBox ItemsSource="{Binding EducationLevels}" SelectedItem="{Binding employeeEducation}" Grid.Column="7" Grid.Row="2">
+            <ComboBoxItem Content="Среднее профессиональное образование" />
+            <ComboBoxItem Content="Бакалавриат" />
+            <ComboBoxItem Content="Специалитет" />
+            <ComboBoxItem Content="Магистратура" />
+        </ComboBox>
+        <TextBox Text="{Binding employeeEducationNumber}" Grid.Column="7" Grid.Row="4" />
+        <TextBox Text="{Binding employeeEducationSeries}" Grid.Column="7" Grid.Row="6" />
+        <TextBox Text="{Binding employeeChildrenBirthCertificateNumber}" Grid.Column="7" Grid.Row="8" />
+        <TextBox Text="{Binding employeeNumberWorkBook}" Grid.Column="7" Grid.Row="10" />
+        <TextBox Text="{Binding employeeSeriesWorkBook}" Grid.Column="7" Grid.Row="12" />
+        <TextBox Text="{Binding employeeNumberOfMilitaryId}" Grid.Column="7" Grid.Row="14" />
+        <TextBox Text="{Binding employeeSeriesOfMilitaryId}" Grid.Column="7" Grid.Row="16" />
+
+        <CheckBox FontSize="16" Grid.Column="5" Grid.Row="18" VerticalAlignment="Center" Content="Является администратором?" IsChecked="{Binding IsAdmin, Mode=TwoWay}" Grid.ColumnSpan="3" Margin="0,0,10,0" />
+
+        <Button Click="BtCancel_Click" Background="#4183A6" Foreground="White" Content="Отменить" Style="{StaticResource RoundCornerButton}" Grid.Column="1" Grid.Row="20" />
+        <Button Click="BtSave_Click" Background="#4183A6" Foreground="White" Content="Сохранить" Style="{StaticResource RoundCornerButton}" Grid.Column="7" Grid.Row="20" />
     </Grid>
 </Window>

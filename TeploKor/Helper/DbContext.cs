@@ -19,9 +19,7 @@ namespace TeploKor.Helper
         public DbSet<Client> Client { get; set; }
         public DbSet<Cart> Cart { get; set; }
         public DbSet<Order> Order { get; set; }
-        public DbSet<Pipes> Pipes { get; set; }
-        public DbSet<Substrate> Substrate { get; set; }
-        public DbSet<WarmFloor> WarmFloor { get; set; }
+        public DbSet<Radiator> Radiator {  get; set; }
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             optionsBuilder.UseSqlite("Data Source=D:\\TeploKor\\TeploKor\\BD\\TeploKor.db");

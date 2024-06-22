@@ -188,7 +188,7 @@ namespace TeploKor.Model
             }
         }
         public Employee() { }
-        public Employee(int employeeId, string employeeSurname, string employeeName, string? employeePatronymic, int employeeSeriesPassport, int employeeNumberPassport, string employeeEducation, string? employeeChildrenBirthCertificateNumber, string employeeNumberWorkBook, string employeeSeriesWorkBook, string employeeEducationNumber, string employeeEducationSeries, string? employeeNumberOfMilitaryId, string? employeeSeriesOfMilitaryId, string employeeLogin, string employeePassword, string employeeContactNumber)
+        public Employee(int employeeId, string employeeSurname, string employeeName, string? employeePatronymic, int employeeSeriesPassport, int employeeNumberPassport, string employeeEducation, string? employeeChildrenBirthCertificateNumber, string employeeNumberWorkBook, string employeeSeriesWorkBook, string employeeEducationNumber, string employeeEducationSeries, string? employeeNumberOfMilitaryId, string? employeeSeriesOfMilitaryId, string employeeLogin, string employeePassword, string employeeContactNumber, bool isAdmin, string email)
         {
             this.employeeId = employeeId;
             this.employeeSurname = employeeSurname;
@@ -207,6 +207,8 @@ namespace TeploKor.Model
             this.employeeLogin = employeeLogin;
             this.employeePassword = employeePassword;
             this.employeeContactNumber = employeeContactNumber;
+            this.IsAdmin = isAdmin;
+            this.employeeEmail = employeeEmail;
         }
         public Employee ShallowCopy()
         {

@@ -12,33 +12,84 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using TeploKor.Model;
+using TeploKor.ViewModel;
 
 namespace TeploKor.View
 {
     public partial class WindowEmployee : Window
     {
+        private CurrentUser currentUser;
         public WindowEmployee()
         {
             InitializeComponent();
+            DataContext = new EmployeeViewModel();
         }
         private void Menu_Click(object sender, RoutedEventArgs e)
         {
-            WindowMenu menu = new WindowMenu();
-
-            // Проверяем роль пользователя и добавляем соответствующие кнопки в меню
-            if (CurrentUser.IsEmployee == true)
+            if (MenuBorder.Opacity == 0)
             {
-                menu.OrdersButton.Visibility = Visibility.Visible;
-                menu.ProductsButton.Visibility = Visibility.Visible;
+                // делаем меню видимым
+                MenuBorder.Opacity = 1;
             }
-            else if (CurrentUser.IsAdmin == true)
+            else
             {
-                menu.OrdersButton.Visibility = Visibility.Visible;
-                menu.ProductsButton.Visibility = Visibility.Visible;
-                menu.EmployeesButton.Visibility = Visibility.Visible;
+                // делаем меню невидимым
+                MenuBorder.Opacity = 0;
             }
-
-            menu.Show();
         }
+
+        private void Profile_Click(object sender, RoutedEventArgs e)
+        {
+            WindowClient windowClient = new WindowClient(currentUser);
+            windowClient.Show();
+            this.Close();
+        }
+        private void Exit_Click(object sender, RoutedEventArgs e)
+        {
+            System.Windows.Application.Current.Shutdown();
+        }
+        private void Boiler_Click(object sender, RoutedEventArgs e)
+        {
+            WindowBoiler windowBoiler = new WindowBoiler(currentUser);
+            windowBoiler.Show();
+            this.Close();
+        }
+        private void Radiator_Click(object sender, RoutedEventArgs e)
+        {
+            WindowRadiator windowRadiator = new WindowRadiator();
+            windowRadiator.Show();
+            this.Close();
+        }
+        private void Orders_Click(object sender, RoutedEventArgs e)
+        {
+            WindowHistory windowHistory = new WindowHistory();
+            windowHistory.Show();
+            this.Close();
+        }
+        private void Cart_Click(object sender, RoutedEventArgs e)
+        {
+            WindowCart windowCart = new WindowCart(currentUser);
+            windowCart.Show();
+            this.Close();
+        }
+        private void Products_Click(object sender, RoutedEventArgs e)
+        {
+            WindowEmployeeControl windowEmployeeControl = new WindowEmployeeControl();
+            windowEmployeeControl.Show();
+            this.Close();
+        }
+        private void Employees_Click(object sender, RoutedEventArgs e)
+        {
+            WindowEmployee windowEmployee = new WindowEmployee();
+            windowEmployee.Show();
+            this.Close();
+        }
+        private void Product_Click(object sender, RoutedEventArgs e)
+        {
+            WindowEmployeeControl windowEmployeeControl = new WindowEmployeeControl();
+            windowEmployeeControl.Show();
+            this.Close();
+        }
+
     }
 }

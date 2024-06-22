@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:TeploKor.View"
         mc:Ignorable="d"
-        Title="WindowEmployeeControl"  Height="550" Width="800">
+        Title="WindowEmployeeControl"  Height="700" Width="1200">
     <Window.Resources>
         <Style TargetType="Button" x:Key="RoundCornerButton">
             <Setter Property="Background" Value="LightBlue"/>
@@ -26,6 +26,32 @@
             <Style.Triggers>
                 <Trigger Property="IsMouseOver" Value="True">
                     <Setter Property="Background" Value="SkyBlue"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+        <Style x:Key="FlatButtonStyle" TargetType="Button">
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="BorderBrush" Value="Transparent"/>
+            <Setter Property="Foreground" Value="Black"/>
+            <Setter Property="FontSize" Value="18"/>
+            <Setter Property="Margin" Value="0,5,0,5"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="0">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Background" Value="#FFF7E0"/>
+                    <Setter Property="Foreground" Value="Black"/>
+                </Trigger>
+                <Trigger Property="IsPressed" Value="True">
+                    <Setter Property="Background" Value="#FFE6D3"/>
+                    <Setter Property="Foreground" Value="Black"/>
                 </Trigger>
             </Style.Triggers>
         </Style>
@@ -54,20 +80,20 @@
             <RowDefinition Height="25"></RowDefinition>
             <RowDefinition Height="50"></RowDefinition>
         </Grid.RowDefinitions>
-        <StackPanel Background="#FFF7E0" Grid.ColumnSpan="3"></StackPanel>
+        <StackPanel Background="#FFF7E0" Grid.ColumnSpan="3" Margin="0,0,-400,0"></StackPanel>
 
         <Image HorizontalAlignment="Left" Source="../res/img/logo.png" Height="50" Width="92" Grid.ColumnSpan="2"></Image>
-        <Button Click="Menu_Click" Grid.Column="1" BorderBrush="Transparent" Background="#FFF7E0" Content="Меню" FontSize="18" Margin="707,0,0,0" Grid.ColumnSpan="2"></Button>
+        <Button Click="Menu_Click" Grid.Column="2" BorderBrush="Transparent" Background="#FFF7E0" Content="Меню" FontSize="18" Margin="357,0,-400,0"/>
 
         <TextBlock Text="Управление товарами"  FontSize="24" Margin="0,45,529,1" Grid.ColumnSpan="2" Grid.RowSpan="2"/>
 
         <Button FontSize="18" Background="#4183A6" Foreground="White" Style="{StaticResource RoundCornerButton}" Content="Добавить" Grid.Column="1" Margin="10,10,560,15" Grid.Row="2" Grid.RowSpan="2"/>
-        <Button FontSize="18" Background="#4183A6" Foreground="White" Style="{StaticResource RoundCornerButton}" Content="Удалить" Grid.Column="1" Margin="561,10,9,15" Grid.Row="2" Grid.RowSpan="2"/>
-        <Button FontSize="18" Background="#4183A6" Foreground="White" Style="{StaticResource RoundCornerButton}" Content="Редактировать" Grid.Column="1" Margin="285,10,285,15" Grid.Row="2" Grid.RowSpan="2"/>
+        <Button FontSize="18" Background="#4183A6" Foreground="White" Style="{StaticResource RoundCornerButton}" Content="Удалить" Grid.Column="2" Margin="187,10,-342,15" Grid.Row="2" Grid.RowSpan="2"/>
+        <Button FontSize="18" Background="#4183A6" Foreground="White" Style="{StaticResource RoundCornerButton}" Content="Редактировать" Grid.Column="1" Margin="485,10,85,15" Grid.Row="2" Grid.RowSpan="2"/>
 
-        <Border Background="#E1F5FF" CornerRadius="40" Grid.Row="3" Grid.Column="1" Margin="0,20,0,10" Grid.RowSpan="11">
+        <Border Background="#E1F5FF" CornerRadius="40" Grid.Row="3" Grid.Column="1" Margin="0,20,-367,-76" Grid.RowSpan="12" Grid.ColumnSpan="2">
             <StackPanel Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="6" Margin="13,14,18,14">
-                <ListView ItemsSource="{Binding ListEmployee}" SelectedItem="{Binding SelectedEmployee}" FontSize="14" x:Name="lvEmployee" Background="#E1F5FF" Height="347">
+                <ListView ItemsSource="{Binding ListEmployee}" SelectedItem="{Binding SelectedEmployee}" FontSize="14" x:Name="lvEmployee" Background="#E1F5FF" Height="477">
                     <ListView.View>
                         <GridView>
                             <GridViewColumn Width="Auto" DisplayMemberBinding="{Binding productBrand}" Header="Цена"></GridViewColumn>
@@ -77,6 +103,19 @@
                         </GridView>
                     </ListView.View>
                 </ListView>
+            </StackPanel>
+        </Border>
+        <Border Opacity="0" x:Name="MenuBorder" Background="#FFF7E0"  CornerRadius="40" Grid.Row="1" Grid.Column="2" Margin="230,0,-432,-134" Grid.RowSpan="3">
+            <StackPanel>
+                <Button Content="Профиль" Click="Profile_Click" Style="{StaticResource FlatButtonStyle}"/>
+                <Button Content="Бойлер" Click="Boiler_Click" Style="{StaticResource FlatButtonStyle}"/>
+                <Button Content="Радиаторы" Click="Radiator_Click" Style="{StaticResource FlatButtonStyle}"/>
+                <Button Content="Корзина" Click="Cart_Click" Style="{StaticResource FlatButtonStyle}"/>
+                <Button x:Name="OrdersButton" Content="Заказы клиентов" Click="Orders_Click" Visibility="Collapsed" Style="{StaticResource FlatButtonStyle}"/>
+                <Button x:Name="ProductsButton" Content="Управление товарами" Click="Products_Click" Visibility="Collapsed" Style="{StaticResource FlatButtonStyle}"/>
+                <Button x:Name="EmployeesButton" Content="Сотрудники" Click="Employees_Click" Visibility="Collapsed" Style="{StaticResource FlatButtonStyle}"/>
+                <Button x:Name="ProductButton" Content="Управление товарами" Click="Product_Click" Visibility="Collapsed" Style="{StaticResource FlatButtonStyle}"/>
+                <Button Content="Выход" Click="Exit_Click" Style="{StaticResource FlatButtonStyle}"/>
             </StackPanel>
         </Border>
     </Grid>

@@ -19,34 +19,110 @@ namespace TeploKor.View
 {
     public partial class WindowBoiler : Window
     {
+        private CurrentUser currentUser;
         public ObservableCollection<DataItems> DataItems { get; set; }
         public ObservableCollection<DataItems> FilteredDataItems { get; set; }
+        public ObservableCollection<Boiler> ListBoiler { get; set; }
 
-        public WindowBoiler()
+        public WindowBoiler(CurrentUser currentUser)
         {
             InitializeComponent();
+            string connectionString = "Data Source=D:\\TeploKor\\TeploKor\\BD\\TeploKor.db";
+
+            List<Boiler> boiler = MyDbContext.GetEntities<Boiler>(connectionString, "SELECT * FROM Boiler");
+            ListBoiler = new ObservableCollection<Boiler>(boiler);
+
+            DataItems = new ObservableCollection<DataItems>();
+
+            using (var context = new MyDbContext())
+            {
+                var boilers = context.Boiler.ToList();
+
+                foreach (var boiler1 in boilers)
+                {
+                    var dataItem = new DataItems
+                    {
+                        dataItemsName = boiler1.boilerName,
+                        dataItemsPrice = boiler1.boilerPrice,
+                        dataItemsImageSource = boiler1.boilerImageSource,
+                        dataItemsBoilerId = boiler1.boilerId
+                    };
+
+                    DataItems.Add(dataItem);
+                }
+            }
+
             FilteredDataItems = new ObservableCollection<DataItems>(DataItems.Where(item => item.dataItemsBoilerId.HasValue));
             myItemsControl.ItemsSource = FilteredDataItems;
+            this.currentUser = currentUser;
         }
         private void Menu_Click(object sender, RoutedEventArgs e)
         {
-            WindowMenu menu = new WindowMenu();
-
-            if (CurrentUser.IsEmployee == true)
+            if (MenuBorder.Opacity == 0)
             {
-                menu.OrdersButton.Visibility = Visibility.Visible;
-                menu.ProductsButton.Visibility = Visibility.Visible;
+                // делаем меню видимым
+                MenuBorder.Opacity = 1;
             }
-            else if (CurrentUser.IsAdmin == true)
+            else
             {
-                menu.OrdersButton.Visibility = Visibility.Visible;
-                menu.ProductsButton.Visibility = Visibility.Visible;
-                menu.EmployeesButton.Visibility = Visibility.Visible;
+                // делаем меню невидимым
+                MenuBorder.Opacity = 0;
             }
-
-            menu.Show();
         }
-        public CurrentUser CurrentUser { get; private set; } = new CurrentUser();
+
+        private void Profile_Click(object sender, RoutedEventArgs e)
+        {
+            WindowClient windowClient = new WindowClient(currentUser);
+            windowClient.Show();
+            this.Close();
+        }
+        private void Exit_Click(object sender, RoutedEventArgs e)
+        {
+            System.Windows.Application.Current.Shutdown();
+        }
+        private void Boiler_Click(object sender, RoutedEventArgs e)
+        {
+            WindowBoiler windowBoiler = new WindowBoiler( currentUser);
+            windowBoiler.Show();
+            this.Close();
+        }
+        private void Cart_Click(object sender, RoutedEventArgs e)
+        {
+            WindowCart windowCart = new WindowCart( currentUser );
+            windowCart.Show();
+            this.Close();
+        }
+        private void Radiator_Click(object sender, RoutedEventArgs e)
+        {
+            WindowRadiator windowRadiator = new WindowRadiator();
+            windowRadiator.Show();
+            this.Close();
+        }
+        private void Orders_Click(object sender, RoutedEventArgs e)
+        {
+            WindowHistory windowHistory = new WindowHistory();
+            windowHistory.Show();
+            this.Close();
+        }
+        private void Products_Click(object sender, RoutedEventArgs e)
+        {
+            WindowEmployeeControl windowEmployeeControl = new WindowEmployeeControl();
+            windowEmployeeControl.Show();
+            this.Close();
+        }
+        private void Employees_Click(object sender, RoutedEventArgs e)
+        {
+            WindowEmployee windowEmployee = new WindowEmployee();
+            windowEmployee.Show();
+            this.Close();
+        }
+        private void Product_Click(object sender, RoutedEventArgs e)
+        {
+            WindowEmployeeControl windowEmployeeControl = new WindowEmployeeControl();
+            windowEmployeeControl.Show();
+            this.Close();
+        }
+
         private void AddToCart_Click(object sender, RoutedEventArgs e)
         {
             string connectionString = "Data Source=D:\\TeploKor\\TeploKor\\BD\\TeploKor.db";
@@ -73,19 +149,42 @@ namespace TeploKor.View
                         cart.cartName = boiler.boilerName;
                         cart.cartPrice = boiler.boilerPrice;
                         cart.cartImageSource = boiler.boilerImageSource;
-                        cart.clientId = CurrentUser.UserId; // здесь предполагается, что есть доступ к текущему пользователю
+                        cart.clientId = currentUser.UserId; 
 
                         context.Cart.Add(cart);
                         context.SaveChanges();
                     }
                 }
-
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Возникла ошибка при добавлении в корзину: " + ex.Message);
+                if (ex.InnerException != null)
+                {
+                    MessageBox.Show("Возникла ошибка при добавлении в корзину: " + ex.InnerException.Message);
+                }
+                else
+                {
+                    MessageBox.Show("Возникла ошибка при добавлении в корзину: " + ex.Message);
+                }
             }
         }
 
+        public void MoreInfo_Click(object sender, RoutedEventArgs e)
+        {
+            int selectedDataItemsId = (int)((Button)sender).Tag; // Считываем Tag сразу
+            string connectionString = "Data Source=D:\\TeploKor\\TeploKor\\BD\\TeploKor.db";
+            MyDbContext db = new MyDbContext();
+            List<Boiler> boiler = MyDbContext.GetEntities<Boiler>(connectionString, "SELECT * FROM Boiler");
+            if (boiler != null)
+            {
+                var matchingBoiler = boiler.FirstOrDefault(cp => cp.boilerId == selectedDataItemsId);
+                if (matchingBoiler != null)
+                {
+                    WindowBoilerInfo infoWindow = new WindowBoilerInfo(matchingBoiler, currentUser);
+                    infoWindow.Show();
+                    this.Close();
+                }
+            }
+        }
     }
 }

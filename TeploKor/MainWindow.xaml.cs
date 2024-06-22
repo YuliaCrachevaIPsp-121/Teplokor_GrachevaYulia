@@ -9,6 +9,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.Windows.Threading;
+using TeploKor.Helper;
 using TeploKor.View;
 
 namespace TeploKor
@@ -18,6 +19,12 @@ namespace TeploKor
         public MainWindow()
         {
             InitializeComponent();
+
+            WindowStartupLocation = WindowStartupLocation.CenterScreen;
+            WindowState = WindowState.Normal;
+
+            var dbContext = new MyDbContext();
+            dbContext.Database.EnsureCreated();
 
             DispatcherTimer timer = new DispatcherTimer();
             timer.Interval = TimeSpan.FromSeconds(3);

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -20,6 +21,8 @@ namespace TeploKor.View
     {
         public int? ClientId { get; private set; }
         public int? EmployeeId { get; private set; }
+        public CurrentUser CurrentUser { get; private set; } = new CurrentUser();
+
         public WindowEntrance()
         {
             InitializeComponent();
@@ -32,7 +35,6 @@ namespace TeploKor.View
             this.Close();
         }
 
-        public CurrentUser CurrentUser { get; private set; } = new CurrentUser();
         private void LoginButton_Click(object sender, RoutedEventArgs e)
         {
             string login = LoginTextBox.Text.Trim();
@@ -40,35 +42,38 @@ namespace TeploKor.View
 
             using (MyDbContext db = new MyDbContext())
             {
-                // Проверяем, существует ли пользователь в таблице Client
-                Client client = db.Client.FirstOrDefault(c => c.clientEmail == login && c.clientPassword == password);
-                if (client != null)
-                {
-                    CurrentUser.IsClient = true;
-                    CurrentUser.UserId = client.clientId; // Assign the UserId property here
-                    MessageBox.Show($"Добро пожаловать, {client.clientSurname} {client.clientName}!");
-                    WindowClient windowClient = new WindowClient();
-                    windowClient.Show();
-                    this.Close();
-                    return;
-                }
+                    var client = db.Client.FromSqlRaw(
+                        $"SELECT * FROM Client WHERE clientEmail = '{login}' OR clientContactNumber = '{login}' AND clientPassword = '{password}'")
+                        .FirstOrDefault();
 
+                    if (client != null)
+                    {
+                        CurrentUser.IsClient = true;
+                        CurrentUser.UserId = client.clientId;
+                        MessageBox.Show($"Добро пожаловать, {client.clientSurname} {client.clientName}!");
+                        WindowClient windowClient = new WindowClient(CurrentUser);
+                        windowClient.Show();
+                        this.Close();
+                        return;
+                    }
                 // Проверяем, существует ли пользователь в таблице Employee
-                Employee employee = db.Employee.FirstOrDefault(e => e.employeeLogin == login && e.employeePassword == password);
+                var employee = db.Employee.FromSqlRaw(
+    $"SELECT * FROM Employee WHERE employeeLogin = '{login}' AND employeePassword = '{password}'")
+    .FirstOrDefault();
                 if (employee != null)
                 {
-                    CurrentUser.UserId = employee.employeeId; // Assign the UserId property here
+                    CurrentUser.UserId = employee.employeeId; // extract the employeeId property from the Employee object
                     if (employee.IsAdmin)
                     {
                         MessageBox.Show($"Добро пожаловать, администратор {employee.employeeSurname} {employee.employeeName}!");
-                        WindowClient windowClient = new WindowClient();
+                        WindowClient windowClient = new WindowClient(CurrentUser);
                         windowClient.Show();
                         this.Close();
                     }
                     else
                     {
                         MessageBox.Show($"Добро пожаловать, сотрудник {employee.employeeSurname} {employee.employeeName}!");
-                        WindowClient windowClient = new WindowClient();
+                        WindowClient windowClient = new WindowClient(CurrentUser);
                         windowClient.Show();
                         this.Close();
                     }

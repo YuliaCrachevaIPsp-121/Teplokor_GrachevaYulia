@@ -24,11 +24,10 @@ namespace TeploKor.Model
         public decimal orderCost { get; set; }
         [ForeignKey("Client")]
         public int clientId { get; set; }
-        [ForeignKey("Employee")]
-        public int employeeId { get; set; }
+        public string orderStatus { get; set; }
         public Order() { }
 
-        public Order(int orderId, string orderDeliveryMethod, string orderPaymentMethod, string? orderDeliveryAddressCountry, string? orderDeliveryAddressStreet, string? orderDeliveryAddressHome, string? orderDeliveryAddressNumberApartament, decimal orderCost, int clientId, int employeeId)
+        public Order(int orderId, string orderDeliveryMethod, string orderPaymentMethod, string? orderDeliveryAddressCountry, string? orderDeliveryAddressStreet, string? orderDeliveryAddressHome, string? orderDeliveryAddressNumberApartament, decimal orderCost, int clientId, int employeeId, string orderStatus)
         {
             this.orderId = orderId;
             this.orderDeliveryMethod = orderDeliveryMethod;
@@ -39,7 +38,7 @@ namespace TeploKor.Model
             this.orderDeliveryAddressNumberApartament = orderDeliveryAddressNumberApartament;
             this.orderCost = orderCost;
             this.clientId = clientId;
-            this.employeeId = employeeId;
+            this.orderStatus = orderStatus;
         }
 
         public event PropertyChangedEventHandler PropertyChanged;

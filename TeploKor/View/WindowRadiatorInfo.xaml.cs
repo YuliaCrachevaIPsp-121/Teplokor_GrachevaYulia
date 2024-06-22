@@ -12,16 +12,16 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using TeploKor.Model;
-using OfficeOpenXml;
 
 namespace TeploKor.View
 {
-    public partial class WindowHistory : Window
+    public partial class WindowRadiatorInfo : Window
     {
         private CurrentUser currentUser;
-        public WindowHistory()
+        public WindowRadiatorInfo(Radiator selectedRadiator, CurrentUser currentUser)
         {
             InitializeComponent();
+            this.currentUser = currentUser;
         }
         private void Menu_Click(object sender, RoutedEventArgs e)
         {
@@ -90,28 +90,5 @@ namespace TeploKor.View
             this.Close();
         }
 
-        private void Completed_Click(object sender, RoutedEventArgs e)
-        {
-            var button = (Button)sender;
-            var grid = (Grid)button.Parent;
-            var order = (Order)grid.DataContext;
-
-            order.orderStatus = "Выполнено";
-        }
-
-        private void Cancel_Click(object sender, RoutedEventArgs e)
-        {
-            var button = (Button)sender;
-            var grid = (Grid)button.Parent;
-            var order = (Order)grid.DataContext;
-        }
-        private void Excel_Click(object sender, RoutedEventArgs e)
-        {
-            ExcelPackage.LicenseContext = LicenseContext.NonCommercial;
-
-            // стиль
-
-            // наполнение
-        }
     }
 }

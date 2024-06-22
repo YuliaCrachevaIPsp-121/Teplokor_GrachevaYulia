@@ -34,6 +34,12 @@ namespace TeploKor.ViewModel
 
         public ClientViewModel()
         {
+            string connectionString = "Data Source=D:\\TeploKor\\TeploKor\\BD\\TeploKor.db";
+
+            List<Client> clients = MyDbContext.GetEntities<Client>(connectionString, "SELECT * FROM Client");
+
+            // Преобразование в ObservableCollection
+            ListClient = new ObservableCollection<Client>(clients);
         }
 
         private RelayCommand editClient;

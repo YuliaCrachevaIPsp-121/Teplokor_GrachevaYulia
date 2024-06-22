@@ -12,8 +12,11 @@ namespace TeploKor.Model
 {
     public class DataItems : INotifyPropertyChanged
     {
+        private static int _idCounter;
+
         private string _imageSource;
         private string _name;
+        private decimal _price;
         [Key]
         public int dataItemsId { get; set; }
         public string dataItemsImageSource 
@@ -34,28 +37,36 @@ namespace TeploKor.Model
                 OnPropertyChanged("dataItemsName");
             }
         }
+        public decimal dataItemsPrice
+        {
+            get { return _price; }
+            set
+            {
+                _price = value;
+                OnPropertyChanged("dataItemsPrice");
+            }
+        }
         [ForeignKey("Radiator")]
         public int? dataItemsRadiatorId { get; set; }
         [ForeignKey("Boiler")]
         public int? dataItemsBoilerId { get; set; }
-        [ForeignKey("Pipes")]
-        public int? dataItemsPipesId { get; set; }
-        [ForeignKey("Substrate")]
-        public int? dataItemsSubstrateId { get; set; }
         [ForeignKey("WarmFloor")]
         public int? dataItemsWarmFloorId { get; set; }
-
         public DataItems() { }
-        public DataItems(string dataItemsImageSource, string dataItemsName, int? dataItemsRadiatorId, int? dataItemsBoilerId, int? dataItemsPipesId, int? dataItemsSubstrateId, int? dataItemsWarmFloorId)
+        private static int GetNextId()
         {
+            return ++_idCounter;
+        }
+        public DataItems(string dataItemsImageSource, string dataItemsName, int? dataItemsRadiatorId, int? dataItemsBoilerId, int? dataItemsWarmFloorId)
+        {
+            dataItemsId = GetNextId();
             this.dataItemsImageSource = dataItemsImageSource;
             this.dataItemsName = dataItemsName;
             this.dataItemsRadiatorId = dataItemsRadiatorId;
             this.dataItemsBoilerId = dataItemsBoilerId;
-            this.dataItemsPipesId = dataItemsPipesId;
-            this.dataItemsSubstrateId = dataItemsSubstrateId;
             this.dataItemsWarmFloorId = dataItemsWarmFloorId;
         }
+
 
         public event PropertyChangedEventHandler PropertyChanged;
         protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = "")

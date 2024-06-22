@@ -97,16 +97,12 @@ namespace TeploKor.View
             }
         }
 
-        // Метод проверки имени и фамилии на корректность
         private bool IsValidName(string name)
         {
             return !name.Any(char.IsDigit);
         }
-
-        // Метод проверки номера телефона на корректность
         private bool IsValidPhoneNumber(string phoneNumber)
         { 
-            // Регулярное выражение для проверки номера телефона
             string pattern = @"^\+?\d{1,3}?[- .]?\(?(?:\d{2,3})\)?[- .]?\d\d\d[- .]?\d\d\d\d$";
             return Regex.IsMatch(phoneNumber, pattern);
         }

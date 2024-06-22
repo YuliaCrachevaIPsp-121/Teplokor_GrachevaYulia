@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:TeploKor.View"
         mc:Ignorable="d"
-        Title="WindowBoiler" Height="550" Width="800">
+        Title="WindowBoiler" Height="700" Width="1200">
     <Window.Resources>
         <Style TargetType="Button" x:Key="RoundCornerButton">
             <Setter Property="Background" Value="LightBlue"/>
@@ -29,6 +29,32 @@
                 </Trigger>
             </Style.Triggers>
         </Style>
+        <Style x:Key="FlatButtonStyle" TargetType="Button">
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="BorderBrush" Value="Transparent"/>
+            <Setter Property="Foreground" Value="Black"/>
+            <Setter Property="FontSize" Value="18"/>
+            <Setter Property="Margin" Value="0,5,0,5"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="0">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Background" Value="#FFF7E0"/>
+                    <Setter Property="Foreground" Value="Black"/>
+                </Trigger>
+                <Trigger Property="IsPressed" Value="True">
+                    <Setter Property="Background" Value="#FFE6D3"/>
+                    <Setter Property="Foreground" Value="Black"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
     </Window.Resources>
 
     <Grid>
@@ -43,14 +69,14 @@
             <RowDefinition Height="450"></RowDefinition>
             <RowDefinition Height="25"></RowDefinition>
         </Grid.RowDefinitions>
-        <StackPanel Background="#FFF7E0" Grid.ColumnSpan="3"></StackPanel>
+        <StackPanel Background="#FFF7E0" Grid.ColumnSpan="3" Margin="0,0,-400,0"></StackPanel>
 
         <Image HorizontalAlignment="Left" Source="../res/img/logo.png" Height="50" Width="92" Grid.ColumnSpan="2"></Image>
-        <Button Click="Menu_Click" Grid.Column="1" BorderBrush="Transparent" Background="#FFF7E0" Content="Меню" FontSize="18" Margin="707,0,0,0" Grid.ColumnSpan="2"></Button>
+        <Button Click="Menu_Click" Grid.Column="2" BorderBrush="Transparent" Background="#FFF7E0" Content="Меню" FontSize="18" Margin="347,0,-390,0"/>
 
         <TextBlock Text="Котлы"  FontSize="24" Margin="0,43,610,448" Grid.ColumnSpan="2" Grid.RowSpan="3"/>
 
-        <ScrollViewer Grid.RowSpan="2" Margin="0,2,0,12" Grid.Row="2" Grid.ColumnSpan="3">
+        <ScrollViewer Grid.RowSpan="2" Margin="0,2,-390,-134" Grid.Row="2" Grid.ColumnSpan="3">
             <ItemsControl x:Name="myItemsControl" ItemsSource="{Binding FilteredDataItems}" Background="White">
                 <ItemsControl.ItemsPanel>
                     <ItemsPanelTemplate>
@@ -82,5 +108,18 @@
                 </ItemsControl.ItemTemplate>
             </ItemsControl>
         </ScrollViewer>
+        <Border Opacity="0" x:Name="MenuBorder" Background="#FFF7E0"  CornerRadius="40" Grid.Row="1" Grid.Column="2" Margin="230,0,-432,-134" Grid.RowSpan="3">
+            <StackPanel>
+                <Button Content="Профиль" Click="Profile_Click" Style="{StaticResource FlatButtonStyle}"/>
+                <Button Content="Бойлер" Click="Boiler_Click" Style="{StaticResource FlatButtonStyle}"/>
+                <Button Content="Радиаторы" Click="Radiator_Click" Style="{StaticResource FlatButtonStyle}"/>
+                <Button Content="Корзина" Click="Cart_Click" Style="{StaticResource FlatButtonStyle}"/>
+                <Button x:Name="OrdersButton" Content="Заказы клиентов" Click="Orders_Click" Visibility="Collapsed" Style="{StaticResource FlatButtonStyle}"/>
+                <Button x:Name="ProductsButton" Content="Управление товарами" Click="Products_Click" Visibility="Collapsed" Style="{StaticResource FlatButtonStyle}"/>
+                <Button x:Name="EmployeesButton" Content="Сотрудники" Click="Employees_Click" Visibility="Collapsed" Style="{StaticResource FlatButtonStyle}"/>
+                <Button x:Name="ProductButton" Content="Управление товарами" Click="Product_Click" Visibility="Collapsed" Style="{StaticResource FlatButtonStyle}"/>
+                <Button Content="Выход" Click="Exit_Click" Style="{StaticResource FlatButtonStyle}"/>
+            </StackPanel>
+        </Border>
     </Grid>
 </Window>

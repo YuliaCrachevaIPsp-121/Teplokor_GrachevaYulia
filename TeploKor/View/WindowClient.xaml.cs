@@ -18,48 +18,135 @@ namespace TeploKor.View
 {
     public partial class WindowClient : Window
     {
+        private CurrentUser currentUser;
+        public int? ClientId { get; private set; }
         public string FullName { get; private set; }
         public string Email { get; private set; }
         public string PhoneNumber { get; private set; }
-        private int? clientId;
-        private int? employeeId;
-        public WindowClient()
+
+        public WindowClient(CurrentUser currentUser)
         {
             InitializeComponent();
-
-            this.clientId = clientId;
-            this.employeeId = employeeId;
-
-            if (clientId.HasValue)
+            this.currentUser = currentUser;
+            if (currentUser.IsClient)
             {
-                using (MyDbContext db = new MyDbContext())
+                if (currentUser.UserId != null)
                 {
-                    Client client = db.Client.FirstOrDefault(c => c.clientId == clientId.Value);
-                    if (client != null)
+                    using (MyDbContext db = new MyDbContext())
                     {
-                        FullName = $"{client.clientSurname} {client.clientName}";
-                        Email = client.clientEmail;
-                        PhoneNumber = client.clientContactNumber;
-
-                        if (string.IsNullOrEmpty(Email))
+                        Client client = db.Client.FirstOrDefault(c => c.clientId == currentUser.UserId);
+                        if (client != null)
                         {
-                            PhoneNumberTextBlock.Visibility = Visibility.Collapsed;
+                            ClientId = client.clientId;
+                            FullNameTextBlock.Text = $"{client.clientSurname} {client.clientName}";
+                            EmailTextBlock.Text = client.clientEmail;
+                            PhoneNumberTextBlock.Text = client.clientContactNumber;
+
+                            if (string.IsNullOrEmpty(Email))
+                            {
+                                PhoneNumberTextBlock.Visibility = Visibility.Collapsed;
+                            }
                         }
                     }
                 }
             }
-            else if (employeeId.HasValue)
+            else if (currentUser.IsAdmin || currentUser.IsEmployee)
             {
-                using (MyDbContext db = new MyDbContext())
+                if (currentUser.UserId != null)
                 {
-                    Employee employee = db.Employee.FirstOrDefault(c => c.employeeId == employeeId.Value);
-                    if (employee != null)
+                    using (MyDbContext db = new MyDbContext())
                     {
-                        FullName = $"{employee.employeeSurname} {employee.employeeName}";
-                        Email = employee.employeeEmail;
-                        PhoneNumber = employee.employeeContactNumber;
+                        Employee employee = db.Employee.FirstOrDefault(c => c.employeeId == currentUser.UserId);
+                        if (employee != null)
+                        {
+                            FullNameTextBlock.Text = $"{employee.employeeSurname} {employee.employeeName}";
+                            EmailTextBlock.Text = employee.employeeEmail;
+                            PhoneNumberTextBlock.Text = employee.employeeContactNumber;
+                        }
                     }
                 }
+            }
+        }
+
+        private void Menu_Click(object sender, RoutedEventArgs e)
+        {
+            if (MenuBorder.Opacity == 0)
+            {
+                // делаем меню видимым
+                MenuBorder.Opacity = 1;
+            }
+            else
+            {
+                // делаем меню невидимым
+                MenuBorder.Opacity = 0;
+            }
+        }
+        private void Cart_Click(object sender, RoutedEventArgs e)
+        {
+            WindowCart windowCart = new WindowCart(currentUser);
+            windowCart.Show();
+            this.Close();
+        }
+        private void Profile_Click(object sender, RoutedEventArgs e)
+        {
+            WindowClient windowClient = new WindowClient(currentUser);
+            windowClient.Show();
+            this.Close();
+        }
+        private void Exit_Click(object sender, RoutedEventArgs e)
+        {
+            System.Windows.Application.Current.Shutdown();
+        }
+        private void Boiler_Click(object sender, RoutedEventArgs e)
+        {
+            WindowBoiler windowBoiler = new WindowBoiler(currentUser);
+            windowBoiler.Show();
+            this.Close();
+        }
+        private void Radiator_Click(object sender, RoutedEventArgs e)
+        {
+            WindowRadiator windowRadiator = new WindowRadiator();
+            windowRadiator.Show();
+            this.Close();
+        }
+        private void Orders_Click(object sender, RoutedEventArgs e)
+        {
+            WindowHistory windowHistory = new WindowHistory();
+            windowHistory.Show();
+            this.Close();
+        }
+        private void Products_Click(object sender, RoutedEventArgs e)
+        {
+            WindowEmployeeControl windowEmployeeControl = new WindowEmployeeControl();
+            windowEmployeeControl.Show();
+            this.Close();
+        }
+        private void Employees_Click(object sender, RoutedEventArgs e)
+        {
+            WindowEmployee windowEmployee = new WindowEmployee();
+            windowEmployee.Show();
+            this.Close();
+        }
+        private void Product_Click(object sender, RoutedEventArgs e)
+        {
+            WindowEmployeeControl windowEmployeeControl = new WindowEmployeeControl();
+            windowEmployeeControl.Show();
+            this.Close();
+        }
+
+        private void SetButtonsAvailability()
+        {
+            if (currentUser.IsClient)
+            {
+                HistoryButton.IsEnabled = true;
+                DeleteButton.IsEnabled = true;
+                EditButton.IsEnabled = true;
+            }
+            else
+            {
+                HistoryButton.IsEnabled = false;
+                DeleteButton.IsEnabled = false;
+                EditButton.IsEnabled = false;
             }
         }
         private void Delete_Click(object sender, RoutedEventArgs e)
@@ -69,18 +156,18 @@ namespace TeploKor.View
             {
                 using (MyDbContext db = new MyDbContext())
                 {
-                    if (clientId.HasValue)
+                    if (currentUser.IsClient)
                     {
-                        Client client = db.Client.FirstOrDefault(c => c.clientId == clientId.Value);
+                        Client client = db.Client.FirstOrDefault(c => c.clientId == currentUser.UserId);
                         if (client != null)
                         {
                             db.Client.Remove(client);
                             db.SaveChanges();
                         }
                     }
-                    else if (employeeId.HasValue)
+                    else if (currentUser.IsEmployee)
                     {
-                        Employee employee = db.Employee.FirstOrDefault(e => e.employeeId == employeeId.Value);
+                        Employee employee = db.Employee.FirstOrDefault(e => e.employeeId == currentUser.UserId);
                         if (employee != null)
                         {
                             db.Employee.Remove(employee);
@@ -97,29 +184,9 @@ namespace TeploKor.View
         }
         private void History_Click(object sender, RoutedEventArgs e)
         {
-            WindowHistoryСlient historyClient = new WindowHistoryСlient(clientId);
+            WindowHistoryСlient historyClient = new WindowHistoryСlient(ClientId);
             historyClient.Show();
             this.Close();
-        }
-
-        private void Menu_Click(object sender, RoutedEventArgs e)
-        {
-            WindowMenu menu = new WindowMenu();
-
-            // Проверяем роль пользователя и добавляем соответствующие кнопки в меню
-            if (CurrentUser.IsEmployee == true)
-            {
-                menu.OrdersButton.Visibility = Visibility.Visible;
-                menu.ProductsButton.Visibility = Visibility.Visible;
-            }
-            else if (CurrentUser.IsAdmin == true)
-            {
-                menu.OrdersButton.Visibility = Visibility.Visible;
-                menu.ProductsButton.Visibility = Visibility.Visible;
-                menu.EmployeesButton.Visibility = Visibility.Visible;
-            }
-
-            menu.Show();
         }
     }
 }

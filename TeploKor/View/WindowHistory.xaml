@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:TeploKor.View"
         mc:Ignorable="d"
-        Title="WindowHistory" Height="550" Width="800">
+        Title="WindowHistory" Height="700" Width="1200">
     <Window.Resources>
         <Style TargetType="Button" x:Key="RoundCornerButton">
             <Setter Property="Background" Value="LightBlue"/>
@@ -29,6 +29,32 @@
                 </Trigger>
             </Style.Triggers>
         </Style>
+        <Style x:Key="FlatButtonStyle" TargetType="Button">
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="BorderBrush" Value="Transparent"/>
+            <Setter Property="Foreground" Value="Black"/>
+            <Setter Property="FontSize" Value="18"/>
+            <Setter Property="Margin" Value="0,5,0,5"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="0">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Background" Value="#FFF7E0"/>
+                    <Setter Property="Foreground" Value="Black"/>
+                </Trigger>
+                <Trigger Property="IsPressed" Value="True">
+                    <Setter Property="Background" Value="#FFE6D3"/>
+                    <Setter Property="Foreground" Value="Black"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
     </Window.Resources>
 
     <Grid>
@@ -43,40 +69,97 @@
             <RowDefinition Height="450"></RowDefinition>
             <RowDefinition Height="25"></RowDefinition>
         </Grid.RowDefinitions>
-        <StackPanel Background="#FFF7E0" Grid.ColumnSpan="3"></StackPanel>
+        <StackPanel Background="#FFF7E0" Grid.ColumnSpan="3" Margin="0,0,-400,0"></StackPanel>
 
         <Image HorizontalAlignment="Left" Source="../res/img/logo.png" Height="50" Width="92" Grid.ColumnSpan="2"></Image>
-        <Button Click="Menu_Click" Grid.Column="1" BorderBrush="Transparent" Background="#FFF7E0" Content="Меню" FontSize="18" Margin="707,0,0,0" Grid.ColumnSpan="2"></Button>
+        <Button Click="Menu_Click" Grid.Column="2" BorderBrush="Transparent" Background="#FFF7E0" Content="Меню" FontSize="18" Margin="357,0,-400,0"/>
+        <ScrollViewer Grid.RowSpan="3" Margin="10,5,-390,-134" Grid.Row="1" Grid.ColumnSpan="3">
+            <Border BorderBrush="Transparent" BorderThickness="1" Padding="5">
+                <Grid>
+                    <TextBlock Text="Заказы клиентов" FontSize="24" Margin="0,43,661,511"/>
 
-        <TextBlock Text="Заказы клиентов"  FontSize="24" Margin="0,43,463,448" Grid.ColumnSpan="2" Grid.RowSpan="3"/>
+                    <ItemsControl ItemsSource="{Binding DataItemsHistory}" Background="White" Grid.Row="1">
+                        <ItemsControl.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <UniformGrid Columns="1"/>
+                            </ItemsPanelTemplate>
+                        </ItemsControl.ItemsPanel>
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate>
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="Auto"/>
+                                    </Grid.ColumnDefinitions>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="Auto"/>
+                                        <RowDefinition Height="Auto"/>
+                                        <RowDefinition Height="Auto"/>
+                                        <RowDefinition Height="Auto"/>
+                                    </Grid.RowDefinitions>
+                                    <Border Grid.ColumnSpan="2" BorderBrush="Black" BorderThickness="1" Padding="5">
+                                        <TextBlock x:Name="orderNumber" Text="" FontSize="18"/>
+                                    </Border>
+                                    <TextBlock Grid.Row="1" Text="{Binding Path=OrderDate}" FontSize="14"/>
+                                    <TextBlock Grid.Row="2" Text="{Binding Path=ClientFullName}" FontSize="14"/>
+                                    <TextBlock Grid.Row="3" Text="{Binding Path=ProductNames}" FontSize="14"/>
+                                    <StackPanel Grid.Column="1" Grid.RowSpan="4" Orientation="Vertical" VerticalAlignment="Center">
+                                        <Button Content="Выполнено" FontSize="14" Foreground="White" Background="#5A6986" Click="Completed_Click"/>
+                                        <Button Content="Отменить" FontSize="14" Foreground="White" Background="#5A6986" Click="Cancel_Click"/>
+                                    </StackPanel>
+                                </Grid>
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                    </ItemsControl>
+                    <TextBlock Text="Выполненные заказы" FontSize="24" Margin="0,43,575,511"/>
 
-        <ScrollViewer Grid.RowSpan="2" Margin="0,2,0,12" Grid.Row="2" Grid.ColumnSpan="2" Grid.Column="1">
-            <ItemsControl ItemsSource="{Binding DataItemsHistory}" Background="White">
-                <ItemsControl.ItemsPanel>
-                    <ItemsPanelTemplate>
-                        <UniformGrid Columns="1"/>
-                    </ItemsPanelTemplate>
-                </ItemsControl.ItemsPanel>
-                <ItemsControl.ItemTemplate>
-                    <DataTemplate>
-                        <Grid>
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="750"></ColumnDefinition>
-                                <ColumnDefinition Width="25"></ColumnDefinition>
-                            </Grid.ColumnDefinitions>
-                            <Grid.RowDefinitions>
-                                <RowDefinition></RowDefinition>
-                            </Grid.RowDefinitions>
-                            <StackPanel Orientation="Horizontal">
-                                <TextBlock Text="{Binding nameClient}" FontSize="18"></TextBlock>
-                                <Button Content="✔️" FontSize="14" Foreground="White" Background="#5A6986" Click="_Click"/>
-                                <Button Content="х" FontSize="14" Foreground="White" Background="#5A6986" Click="_Click"/>
-                                <Button Content="Подробнее" FontSize="14" Foreground="White" Background="#5A6986" Click="MoreInfo_Click"/>
-                            </StackPanel>
-                        </Grid>
-                    </DataTemplate>
-                </ItemsControl.ItemTemplate>
-            </ItemsControl>
+                    <ItemsControl ItemsSource="{Binding DataItemsHistory}" Background="White" Grid.Row="1">
+                        <ItemsControl.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <UniformGrid Columns="1"/>
+                            </ItemsPanelTemplate>
+                        </ItemsControl.ItemsPanel>
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate>
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="Auto"/>
+                                    </Grid.ColumnDefinitions>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="Auto"/>
+                                        <RowDefinition Height="Auto"/>
+                                        <RowDefinition Height="Auto"/>
+                                        <RowDefinition Height="Auto"/>
+                                    </Grid.RowDefinitions>
+                                    <Border Grid.ColumnSpan="2" BorderBrush="Black" BorderThickness="1" Padding="5">
+                                        <TextBlock x:Name="orderNumber" Text="" FontSize="18"/>
+                                    </Border>
+                                    <TextBlock Grid.Row="1" Text="{Binding Path=OrderDate}" FontSize="14"/>
+                                    <TextBlock Grid.Row="2" Text="{Binding Path=ClientFullName}" FontSize="14"/>
+                                    <TextBlock Grid.Row="3" Text="{Binding Path=ProductNames}" FontSize="14"/>
+                                    <StackPanel Grid.Column="1" Grid.RowSpan="4" Orientation="Vertical" VerticalAlignment="Center">
+                                        <Button Content="Создать отчет" FontSize="14" Foreground="White" Background="#5A6986" Click="Excel_Click"/>
+                                    </StackPanel>
+                                </Grid>
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                    </ItemsControl>
+                </Grid>
+            </Border>
         </ScrollViewer>
+        <Border Opacity="0" x:Name="MenuBorder" Background="#FFF7E0"  CornerRadius="40" Grid.Row="1" Grid.Column="2" Margin="230,0,-432,-134" Grid.RowSpan="3">
+            <StackPanel>
+                <Button Content="Профиль" Click="Profile_Click" Style="{StaticResource FlatButtonStyle}"/>
+                <Button Content="Бойлер" Click="Boiler_Click" Style="{StaticResource FlatButtonStyle}"/>
+                <Button Content="Радиаторы" Click="Radiator_Click" Style="{StaticResource FlatButtonStyle}"/>
+                <Button Content="Корзина" Click="Cart_Click" Style="{StaticResource FlatButtonStyle}"/>
+                <Button x:Name="OrdersButton" Content="Заказы клиентов" Click="Orders_Click" Visibility="Collapsed" Style="{StaticResource FlatButtonStyle}"/>
+                <Button x:Name="ProductsButton" Content="Управление товарами" Click="Products_Click" Visibility="Collapsed" Style="{StaticResource FlatButtonStyle}"/>
+                <Button x:Name="EmployeesButton" Content="Сотрудники" Click="Employees_Click" Visibility="Collapsed" Style="{StaticResource FlatButtonStyle}"/>
+                <Button x:Name="ProductButton" Content="Управление товарами" Click="Product_Click" Visibility="Collapsed" Style="{StaticResource FlatButtonStyle}"/>
+                <Button Content="Выход" Click="Exit_Click" Style="{StaticResource FlatButtonStyle}"/>
+            </StackPanel>
+        </Border>
     </Grid>
 </Window>

@@ -14,19 +14,15 @@ using System.Windows.Shapes;
 
 namespace TeploKor.View
 {
-    public partial class WindowNewEmployee : Window
+    public partial class WindowBuy : Window
     {
-        public WindowNewEmployee()
+        public List<string> DeliveryMethods { get; } = new List<string> { "Самовывоз", "Доставка" };
+
+        public List<string> PaymentMethods { get; } = new List<string> { "Наличные", "Картой" };
+
+        public WindowBuy()
         {
             InitializeComponent();
-        }
-        private void BtSave_Click(object sender, RoutedEventArgs e)
-        {
-            DialogResult = true;
-        }
-        private void BtCancel_Click(object sender, RoutedEventArgs e)
-        {
-            DialogResult = false;
         }
     }
 }

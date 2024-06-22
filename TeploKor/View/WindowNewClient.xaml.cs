@@ -14,9 +14,9 @@ using System.Windows.Shapes;
 
 namespace TeploKor.View
 {
-    public partial class WindowNewEmployee : Window
+    public partial class WindowNewClient : Window
     {
-        public WindowNewEmployee()
+        public WindowNewClient()
         {
             InitializeComponent();
         }
