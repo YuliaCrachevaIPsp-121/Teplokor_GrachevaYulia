@@ -55,12 +55,12 @@
 
         <ComboBox x:Name="DeliveryMethodComboBox" ItemsSource="{Binding DeliveryMethods}" SelectedItem="{Binding orderDeliveryMethod, Mode=TwoWay}" Margin="0,10,0,241" Grid.Column="3" Grid.Row="2" RenderTransformOrigin="0.5,0.5"></ComboBox>
         <ComboBox x:Name="PaymentMethodComboBox" ItemsSource="{Binding PaymentMethods}" SelectedItem="{Binding orderPaymentMethod, Mode=TwoWay}" Margin="0,67,0,184" Grid.Column="3" Grid.Row="2" RenderTransformOrigin="0.5,0.5"></ComboBox>
-        <TextBox Text="{Binding orderDeliveryAddressCountry}" Grid.Column="3" Margin="0,122,0,122" Grid.Row="2"/>
-        <TextBox Text="{Binding orderDeliveryAddressStreet}" Grid.Column="3" Margin="0,185,0,59" Grid.Row="2"/>
+        <TextBox x:Name="orderDeliveryAddressCountryTextBox" Text="{Binding orderDeliveryAddressCountry}" Grid.Column="3" Margin="0,122,0,122" Grid.Row="2"/>
+        <TextBox x:Name="orderDeliveryAddressStreetTextBox" Text="{Binding orderDeliveryAddressStreet}" Grid.Column="3" Margin="0,185,0,59" Grid.Row="2"/>
         <TextBlock Text="Способ доставки:" VerticalAlignment="Top" Margin="10,12,1,0" Grid.Column="1" Grid.Row="2"/>
         <TextBlock Text="Способ оплаты:" VerticalAlignment="Top" Margin="10,72,22,0" Grid.Column="1" Grid.Row="2"/>
-        <TextBox Text="{Binding orderDeliveryAddressHome}" Grid.Column="7" Margin="0,10,0,233" Grid.Row="2"/>
-        <TextBox Text="{Binding orderDeliveryAddressNumberApartament}" Grid.Column="7" Margin="0,67,0,176" Grid.Row="2"/>
+        <TextBox x:Name="orderDeliveryAddressHomeTextBox"  Text="{Binding orderDeliveryAddressHome}" Grid.Column="7" Margin="0,10,0,233" Grid.Row="2"/>
+        <TextBox x:Name="orderDeliveryAddressNumberApartamentTextBox" Text="{Binding orderDeliveryAddressNumberApartament}" Grid.Column="7" Margin="0,67,0,176" Grid.Row="2"/>
         <TextBlock Text="Город:" VerticalAlignment="Center" Margin="10,0,69,0" Grid.Column="1" Grid.Row="2"/>
         <TextBlock Text="Улица:" VerticalAlignment="Top" Margin="10,195,80,0" Grid.Column="1" Grid.Row="2"/>
         <TextBlock Text="Номер дома:" VerticalAlignment="Top" Margin="10,20,47,0" Grid.Column="5" Grid.Row="2"/>

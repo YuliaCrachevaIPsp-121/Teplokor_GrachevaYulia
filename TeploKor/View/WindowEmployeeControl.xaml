@@ -84,28 +84,69 @@
 
         <Image HorizontalAlignment="Left" Source="../res/img/logo.png" Height="50" Width="92" Grid.ColumnSpan="2"></Image>
         <Button Click="Menu_Click" Grid.Column="2" BorderBrush="Transparent" Background="#FFF7E0" Content="Меню" FontSize="18" Margin="357,0,-400,0"/>
+        <ScrollViewer Margin="0,0,-400,-109" Grid.RowSpan="14" Grid.Row="1" Grid.ColumnSpan="3">
+            <StackPanel>
 
-        <TextBlock Text="Управление товарами"  FontSize="24" Margin="0,45,529,1" Grid.ColumnSpan="2" Grid.RowSpan="2"/>
-
-        <Button FontSize="18" Background="#4183A6" Foreground="White" Style="{StaticResource RoundCornerButton}" Content="Добавить" Grid.Column="1" Margin="10,10,560,15" Grid.Row="2" Grid.RowSpan="2"/>
-        <Button FontSize="18" Background="#4183A6" Foreground="White" Style="{StaticResource RoundCornerButton}" Content="Удалить" Grid.Column="2" Margin="187,10,-342,15" Grid.Row="2" Grid.RowSpan="2"/>
-        <Button FontSize="18" Background="#4183A6" Foreground="White" Style="{StaticResource RoundCornerButton}" Content="Редактировать" Grid.Column="1" Margin="485,10,85,15" Grid.Row="2" Grid.RowSpan="2"/>
-
-        <Border Background="#E1F5FF" CornerRadius="40" Grid.Row="3" Grid.Column="1" Margin="0,20,-367,-76" Grid.RowSpan="12" Grid.ColumnSpan="2">
-            <StackPanel Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="6" Margin="13,14,18,14">
-                <ListView ItemsSource="{Binding ListEmployee}" SelectedItem="{Binding SelectedEmployee}" FontSize="14" x:Name="lvEmployee" Background="#E1F5FF" Height="477">
-                    <ListView.View>
-                        <GridView>
-                            <GridViewColumn Width="Auto" DisplayMemberBinding="{Binding productBrand}" Header="Цена"></GridViewColumn>
-                            <GridViewColumn Width="Auto" DisplayMemberBinding="{Binding productName}" Header="Название"></GridViewColumn>
-                            <GridViewColumn Width="Auto" DisplayMemberBinding="{Binding productCost}" Header="Цена"></GridViewColumn>
-                            <GridViewColumn Width="Auto" DisplayMemberBinding="{Binding productDescription}" Header="Описание"></GridViewColumn>
-                        </GridView>
-                    </ListView.View>
-                </ListView>
+                <TextBlock Text="Управление товарами"  FontSize="24"/>
+                <TextBlock Text="Котлы"  FontSize="22"/>
+                <StackPanel Orientation="Horizontal">
+                <Button Command="{Binding AddBoiler}" FontSize="18" Background="#4183A6" Foreground="White" Style="{StaticResource RoundCornerButton}" Content="Добавить" Grid.Column="1" Margin="10,10,275,15" Grid.Row="2" Grid.RowSpan="2" Width="200"/>
+                    <Button Command="{Binding DeleteBoiler}" FontSize="18" Background="#4183A6" Foreground="White" Style="{StaticResource RoundCornerButton}" Content="Удалить" Width="200" Height="41"/>
+                    <Button Command="{Binding EditBoiler}" FontSize="18" Background="#4183A6" Foreground="White" Style="{StaticResource RoundCornerButton}" Width="200" Content="Редактировать" Grid.Column="1" Margin="275,10,85,15" Grid.Row="2" Grid.RowSpan="2"/>
+                </StackPanel>
+                <StackPanel>
+                    <Border Background="#E1F5FF" CornerRadius="40" Width="1122">
+                        <StackPanel Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="6" Margin="10,0,10,0">
+                            <ListView ItemsSource="{Binding ListBoiler}" SelectedItem="{Binding SelectedBoiler}" FontSize="14" x:Name="lvBoiler" Background="#E1F5FF" Height="477" Width="1040">
+                                <ListView.View>
+                                    <GridView>
+                                        <GridViewColumn Width="Auto" DisplayMemberBinding="{Binding boilerBrand}" Header="Бренд"/>
+                                        <GridViewColumn Width="Auto" DisplayMemberBinding="{Binding boilerName}" Header="Название"/>
+                                        <GridViewColumn Width="Auto" DisplayMemberBinding="{Binding boilerDescription}" Header="Описание"/>
+                                        <GridViewColumn Width="Auto" DisplayMemberBinding="{Binding boilerKikowatt}" Header="Мощность"/>
+                                        <GridViewColumn Width="Auto" DisplayMemberBinding="{Binding boilerType}" Header="Тип"/>
+                                        <GridViewColumn Width="Auto" DisplayMemberBinding="{Binding boilerElectricOrNot}" Header="Вид"/>
+                                        <GridViewColumn Width="Auto" DisplayMemberBinding="{Binding boilerTurbochargedOrNot}" Header="Турбонаддув"/>
+                                        <GridViewColumn Width="Auto" DisplayMemberBinding="{Binding boilerPrice}" Header="Цена"/>
+                                        <GridViewColumn Width="Auto" DisplayMemberBinding="{Binding boilerInstallationLocation}" Header="Установка"/>
+                                        <GridViewColumn Width="Auto" DisplayMemberBinding="{Binding boilerSquare}" Header="Площадь"/>
+                                    </GridView>
+                                </ListView.View>
+                            </ListView>
+                        </StackPanel>
+                    </Border>
+                </StackPanel>
+                <TextBlock Text="Радиатор"  FontSize="22"/>
+                <StackPanel Orientation="Horizontal">
+                    <Button Command="{Binding AddRadiator}" FontSize="18" Background="#4183A6" Foreground="White" Style="{StaticResource RoundCornerButton}" Content="Добавить" Grid.Column="1" Margin="10,10,275,15" Grid.Row="2" Grid.RowSpan="2" Width="200"/>
+                    <Button Command="{Binding DeleteRadiator}" FontSize="18" Background="#4183A6" Foreground="White" Style="{StaticResource RoundCornerButton}" Content="Удалить" Width="200" Height="41"/>
+                    <Button Command="{Binding EditRadiator}" FontSize="18" Background="#4183A6" Foreground="White" Style="{StaticResource RoundCornerButton}" Width="200" Content="Редактировать" Grid.Column="1" Margin="275,10,85,15" Grid.Row="2" Grid.RowSpan="2"/>
+                </StackPanel>
+                <StackPanel>
+                    <Border Background="#E1F5FF" CornerRadius="40" Width="1122">
+                        <StackPanel Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="6" Margin="10,0,10,0">
+                            <ListView ItemsSource="{Binding ListBoiler}" SelectedItem="{Binding SelectedBoiler}" FontSize="14" x:Name="lvRadiator" Background="#E1F5FF" Height="477" Width="1040">
+                                <ListView.View>
+                                    <GridView>
+                                        <GridViewColumn Width="Auto" DisplayMemberBinding="{Binding boilerBrand}" Header="Бренд"/>
+                                        <GridViewColumn Width="Auto" DisplayMemberBinding="{Binding boilerName}" Header="Название"/>
+                                        <GridViewColumn Width="Auto" DisplayMemberBinding="{Binding boilerDescription}" Header="Описание"/>
+                                        <GridViewColumn Width="Auto" DisplayMemberBinding="{Binding boilerKikowatt}" Header="Мощность"/>
+                                        <GridViewColumn Width="Auto" DisplayMemberBinding="{Binding boilerType}" Header="Тип"/>
+                                        <GridViewColumn Width="Auto" DisplayMemberBinding="{Binding boilerElectricOrNot}" Header="Вид"/>
+                                        <GridViewColumn Width="Auto" DisplayMemberBinding="{Binding boilerTurbochargedOrNot}" Header="Турбонаддув"/>
+                                        <GridViewColumn Width="Auto" DisplayMemberBinding="{Binding boilerPrice}" Header="Цена"/>
+                                        <GridViewColumn Width="Auto" DisplayMemberBinding="{Binding boilerInstallationLocation}" Header="Установка"/>
+                                        <GridViewColumn Width="Auto" DisplayMemberBinding="{Binding boilerSquare}" Header="Площадь"/>
+                                    </GridView>
+                                </ListView.View>
+                            </ListView>
+                        </StackPanel>
+                    </Border>
+                </StackPanel>
             </StackPanel>
-        </Border>
-        <Border Opacity="0" x:Name="MenuBorder" Background="#FFF7E0"  CornerRadius="40" Grid.Row="1" Grid.Column="2" Margin="230,0,-432,-134" Grid.RowSpan="3">
+        </ScrollViewer>
+        <Border Opacity="0" x:Name="MenuBorder" Background="#FFF7E0"  CornerRadius="40" Grid.Row="1" Grid.Column="2" Margin="230,0,-432,-109" Grid.RowSpan="14">
             <StackPanel>
                 <Button Content="Профиль" Click="Profile_Click" Style="{StaticResource FlatButtonStyle}"/>
                 <Button Content="Бойлер" Click="Boiler_Click" Style="{StaticResource FlatButtonStyle}"/>

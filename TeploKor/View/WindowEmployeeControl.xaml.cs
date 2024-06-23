@@ -21,6 +21,7 @@ namespace TeploKor.View
         public WindowEmployeeControl()
         {
             InitializeComponent();
+            DataContext = new BoilerViewModel();
         }
         private void Menu_Click(object sender, RoutedEventArgs e)
         {

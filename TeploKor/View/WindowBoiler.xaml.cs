@@ -14,6 +14,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using TeploKor.Helper;
 using TeploKor.Model;
+using System.Linq;
 
 namespace TeploKor.View
 {
@@ -171,18 +172,16 @@ namespace TeploKor.View
 
         public void MoreInfo_Click(object sender, RoutedEventArgs e)
         {
-            int selectedDataItemsId = (int)((Button)sender).Tag; // Считываем Tag сразу
-            string connectionString = "Data Source=D:\\TeploKor\\TeploKor\\BD\\TeploKor.db";
-            MyDbContext db = new MyDbContext();
-            List<Boiler> boiler = MyDbContext.GetEntities<Boiler>(connectionString, "SELECT * FROM Boiler");
-            if (boiler != null)
+            Button button = (Button)sender;
+            if (button != null && button.Tag != null)
             {
-                var matchingBoiler = boiler.FirstOrDefault(cp => cp.boilerId == selectedDataItemsId);
-                if (matchingBoiler != null)
+                int selectedDataItemsId = (int)button.Tag; // Считываем Tag сразу
+                var matchingDataItem = ListBoiler.FirstOrDefault(cp => cp.boilerId == selectedDataItemsId);
+                if (matchingDataItem != null)
                 {
-                    WindowBoilerInfo infoWindow = new WindowBoilerInfo(matchingBoiler, currentUser);
-                    infoWindow.Show();
-                    this.Close();
+                        WindowBoilerInfo infoWindow = new WindowBoilerInfo(matchingDataItem, currentUser);
+                        infoWindow.Show();
+                        this.Close();
                 }
             }
         }

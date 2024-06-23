@@ -94,10 +94,12 @@
                                 <RowDefinition Height="Auto"/>
                                 <RowDefinition Height="Auto"/>
                                 <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
                             </Grid.RowDefinitions>
-                            <TextBlock Grid.Row="0" Text="{Binding Path=dateOrder}" FontSize="18"/>
-                            <TextBlock Grid.Row="1" Text="{Binding Path=ProductNames}" FontSize="14"/>
-                            <TextBlock Grid.Row="2" Text="{Binding Path=TotalPrice}" FontSize="14"/>
+                            <TextBlock x:Name="clientNameTextBlock" Grid.Row="0" Text="{Binding Path=clientName}" FontSize="16"/>
+                            <TextBlock x:Name="orderNameTextBlock" Grid.Row="1" Text="{Binding Path=ProductNames}" FontSize="16"/>
+                            <TextBlock x:Name="totalPriceTextBlock"  Grid.Row="2" Text="{Binding Path=TotalPrice}" FontSize="16"/>
+                            <Button Grid.Row="3" Tag="{Binding clientId}" Click="Excel_Click" Content="Сделать отчет" FontSize="17"  Background="#4183A6" Foreground="White"  Style="{StaticResource RoundCornerButton}"></Button>
                         </Grid>
                     </DataTemplate>
                 </ItemsControl.ItemTemplate>

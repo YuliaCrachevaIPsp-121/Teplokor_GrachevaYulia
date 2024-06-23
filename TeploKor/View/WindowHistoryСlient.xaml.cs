@@ -1,5 +1,7 @@
-﻿using System;
+﻿using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -11,6 +13,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using TeploKor.Helper;
 using TeploKor.Model;
 
 namespace TeploKor.View
@@ -18,9 +21,53 @@ namespace TeploKor.View
     public partial class WindowHistoryСlient : Window
     {
         private CurrentUser currentUser;
-        public WindowHistoryСlient(int? clientId)
+        public ObservableCollection<DataItemsHistory> DataItemsHistory { get; set; }
+        public ObservableCollection<DataItemsHistory> FilteredDataItemsHistory { get; set; }
+        public ObservableCollection<Order> ListOrder { get; set; }
+        public WindowHistoryСlient(CurrentUser currentUser)
         {
             InitializeComponent();
+            //List<Order> orders = MyDbContext.GetEntities<Order>(connectionString, "SELECT * FROM Order");
+            //ListOrder = new ObservableCollection<Order>(orders);
+
+            //DataItemsHistory = new ObservableCollection<DataItemsHistory>();
+
+            //using (var context = new MyDbContext())
+            //{
+            //    var order = context.Order.ToList();
+            //    var nameClient = context.Order.FromSqlRaw(
+            //                $"SELECT cl.clientSurname + ' ' + cl.clientName + ' ' + cl.clientPatronymic" +
+            //                $"FROM Order ord " +
+            //                $"JOIN Client cl on ord.clientId = cl.clientId");
+            //    var nameProduct = context.Order.FromSqlRaw(
+            //        $"SELECT ");
+            //    foreach (var Order in order)
+            //    {
+            //        var dataItems = new DataItemsHistory
+            //        {
+            //            dataItemsHistoryName = Order.,
+            //            dataItemsCartPrice = Order.cartPrice,
+            //            dataItemsCartImageSource = Order.cartImageSource,
+            //            clientId = Order.clientId
+            //        };
+
+            //        DataItemsCart.Add(dataItemsCart);
+            //    }
+            //}
+
+            //FilteredDataItemsCart = new ObservableCollection<DataItemsCart>(DataItemsCart.Where(item => item.clientId == currentUser.UserId));
+
+            //myItemsControl.ItemsSource = FilteredDataItemsCart;
+            //using (MyDbContext db = new MyDbContext())
+            //{
+            //    var prod = db.Cart.FromSqlRaw(
+            //        $"SELECT COUNT(*) FROM Cart WHERE clientId = '{currentUser.UserId}'")
+            //        .FirstOrDefault();
+            //    totalProduct.Text = $"Всего {prod} товаров ";
+            //    var total = db.Cart.FromSqlRaw($"SELECT SUM(cartPrice) FROM Cart WHERE clientId = '{currentUser.UserId}'")
+            //        .FirstOrDefault();
+            //    totalPrice.Text = $"На сумму {total} рублей";
+            //}
         }
         private void Menu_Click(object sender, RoutedEventArgs e)
         {
@@ -88,6 +135,9 @@ namespace TeploKor.View
             windowEmployeeControl.Show();
             this.Close();
         }
+        private void Excel_Click(object sender, RoutedEventArgs e)
+        {
 
+        }
     }
 }

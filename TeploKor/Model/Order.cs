@@ -24,6 +24,10 @@ namespace TeploKor.Model
         public decimal orderCost { get; set; }
         [ForeignKey("Client")]
         public int clientId { get; set; }
+        [ForeignKey("Boiler")]
+        public int? boilerId { get; set; }
+        [ForeignKey("Radiator")]
+        public int? radiatorId { get; set; }
         public string orderStatus { get; set; }
         public Order() { }
 

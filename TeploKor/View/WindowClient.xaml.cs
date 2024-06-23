@@ -184,7 +184,7 @@ namespace TeploKor.View
         }
         private void History_Click(object sender, RoutedEventArgs e)
         {
-            WindowHistoryСlient historyClient = new WindowHistoryСlient(ClientId);
+            WindowHistoryСlient historyClient = new WindowHistoryСlient(currentUser);
             historyClient.Show();
             this.Close();
         }

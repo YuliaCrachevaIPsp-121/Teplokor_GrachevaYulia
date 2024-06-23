@@ -1,5 +1,4 @@
-﻿using Microsoft.Win32;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -12,13 +11,17 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
-using TeploKor.Model;
 
 namespace TeploKor.View
 {
-    public partial class WindowNewEmployee : Window
+    public partial class WindowNewBoiler : Window
     {
-        public WindowNewEmployee()
+        public List<string> BoilerTypes { get; } = new List<string> { "Комби", "Отопительный", "Водонагреватель", "Тепловой насос" };
+        public List<string> BoilerElectricTypes { get; } = new List<string> { "Газовый", "Электрический" };
+        public List<string> BoilerInstallationLocations { get; } = new List<string> { "Настенное", "Напольное" };
+        public List<string> BoilerTurbochargedTypes { get; } = new List<string> { "Есть", "Нет" };
+
+        public WindowNewBoiler()
         {
             InitializeComponent();
         }
@@ -30,6 +33,5 @@ namespace TeploKor.View
         {
             DialogResult = false;
         }
-        
     }
 }

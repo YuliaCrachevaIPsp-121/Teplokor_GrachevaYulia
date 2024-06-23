@@ -22,10 +22,16 @@ namespace TeploKor.View
         private CurrentUser currentUser;
         public ObservableCollection<DataItems> DataItems { get; set; }
         public ObservableCollection<DataItems> FilteredDataItems { get; set; }
-
+        public ObservableCollection<Radiator> ListRadiator { get; set; }
         public WindowRadiator()
         {
             InitializeComponent();
+            string connectionString = "Data Source=D:\\TeploKor\\TeploKor\\BD\\TeploKor.db";
+
+            List<Radiator> radiators1 = MyDbContext.GetEntities<Radiator>(connectionString, "SELECT * FROM Radiator");
+            ListRadiator = new ObservableCollection<Radiator>(radiators1);
+
+            DataItems = new ObservableCollection<DataItems>();
             using (var context = new MyDbContext())
             {
                 var radiators = context.Radiator.ToList();
@@ -45,6 +51,7 @@ namespace TeploKor.View
             }
             FilteredDataItems = new ObservableCollection<DataItems>(DataItems.Where(item => item.dataItemsRadiatorId.HasValue));
             myItemsControl.ItemsSource = FilteredDataItems;
+            this.currentUser = currentUser;
         }
         private void Menu_Click(object sender, RoutedEventArgs e)
         {
@@ -59,7 +66,12 @@ namespace TeploKor.View
                 MenuBorder.Opacity = 0;
             }
         }
-
+        private void Back_Click(object sender, RoutedEventArgs e)
+        {
+            WindowRadiator windowRadiator = new WindowRadiator();
+            windowRadiator.Show();
+            this.Close();
+        }
         private void Profile_Click(object sender, RoutedEventArgs e)
         {
             WindowClient windowClient = new WindowClient(currentUser);
@@ -113,24 +125,6 @@ namespace TeploKor.View
             this.Close();
         }
 
-        public void MoreInfo_Click(object sender, RoutedEventArgs e)
-        {
-            int selectedDataItemsId = (int)((Button)sender).Tag; // Считываем Tag сразу
-            string connectionString = "Data Source=D:\\TeploKor\\TeploKor\\BD\\TeploKor.db";
-            MyDbContext db = new MyDbContext();
-            List<Radiator> radiator = MyDbContext.GetEntities<Radiator>(connectionString, "SELECT * FROM Radiator");
-            if (radiator != null)
-            {
-                var matchingRadiator = radiator.FirstOrDefault(cp => cp.radiatorId == selectedDataItemsId);
-                if (matchingRadiator != null)
-                {
-                    WindowRadiatorInfo infoWindow = new WindowRadiatorInfo(matchingRadiator, currentUser);
-                    infoWindow.Show();
-                    this.Close();
-                }
-            }
-        }
-        public CurrentUser CurrentUser { get; private set; } = new CurrentUser();
         private void AddToCart_Click(object sender, RoutedEventArgs e)
         {
             string connectionString = "Data Source=D:\\TeploKor\\TeploKor\\BD\\TeploKor.db";
@@ -142,32 +136,54 @@ namespace TeploKor.View
             int itemId = item.dataItemsId;
             if (itemId != null)
             {
-                radiatorId = item.dataItemsBoilerId;
+                radiatorId = item.dataItemsRadiatorId;
             }
 
             try
             {
                 using (var context = new MyDbContext())
                 {
-                    var radiator = context.Radiator.FirstOrDefault(b => b.radiatorId == radiatorId);
+                    var radiators = context.Radiator.FirstOrDefault(b => b.radiatorId == radiatorId);
 
-                    if (radiator != null)
+                    if (radiators != null)
                     {
                         var cart = new Cart();
-                        cart.cartName = radiator.radiatorName;
-                        cart.cartPrice = radiator.radiatorPrice;
-                        cart.cartImageSource = radiator.radiatorImageSource;
-                        cart.clientId = CurrentUser.UserId;
+                        cart.cartName = radiators.radiatorName;
+                        cart.cartPrice = radiators.radiatorPrice;
+                        cart.cartImageSource = radiators.radiatorImageSource;
+                        cart.clientId = currentUser.UserId;
 
                         context.Cart.Add(cart);
                         context.SaveChanges();
                     }
                 }
-
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Возникла ошибка при добавлении в корзину: " + ex.Message);
+                if (ex.InnerException != null)
+                {
+                    MessageBox.Show("Возникла ошибка при добавлении в корзину: " + ex.InnerException.Message);
+                }
+                else
+                {
+                    MessageBox.Show("Возникла ошибка при добавлении в корзину: " + ex.Message);
+                }
+            }
+        }
+
+        public void MoreInfo_Click(object sender, RoutedEventArgs e)
+        {
+            Button button = (Button)sender;
+            if (button != null && button.Tag != null)
+            {
+                int selectedDataItemsId = (int)button.Tag; // Считываем Tag сразу
+                var matchingDataItem = ListRadiator.FirstOrDefault(cp => cp.radiatorId == selectedDataItemsId);
+                if (matchingDataItem != null)
+                {
+                    WindowRadiatorInfo infoWindow = new WindowRadiatorInfo(matchingDataItem, currentUser);
+                    infoWindow.Show();
+                    this.Close();
+                }
             }
         }
     }

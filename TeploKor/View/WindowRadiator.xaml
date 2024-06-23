@@ -74,8 +74,6 @@
         <Image HorizontalAlignment="Left" Source="../res/img/logo.png" Height="50" Width="92" Grid.ColumnSpan="2"></Image>
         <Button Click="Menu_Click" Grid.Column="2" BorderBrush="Transparent" Background="#FFF7E0" Content="Меню" FontSize="18" Margin="357,0,-400,0"/>
 
-        <TextBlock Text="Радиаторы"  FontSize="24" Margin="10,10,600,431" Grid.ColumnSpan="2" Grid.RowSpan="2" Grid.Row="1"/>
-
         <ScrollViewer Grid.RowSpan="2" Margin="10,32,-400,-134" Grid.Row="2" Grid.ColumnSpan="3">
             <ItemsControl  x:Name="myItemsControl" ItemsSource="{Binding DataItems}" Background="White" Height="577">
                 <ItemsControl.ItemsPanel>
@@ -98,10 +96,10 @@
                                 <RowDefinition></RowDefinition>
                             </Grid.RowDefinitions>
                             <StackPanel Orientation="Vertical">
-                                <Image Source="{Binding image}" Width="230" Height="230" Grid.Column="0" VerticalAlignment="Top"></Image>
-                                <TextBlock Text="{Binding name}" FontSize="18"></TextBlock>
-                                <Button Content="Подробнее" FontSize="14" Foreground="White" Background="#5A6986" Click="MoreInfo_Click"/>
-                                <Button Content="В корзину" FontSize="14" Foreground="White" Background="#5A6986" Click="AddToCart_Click"/>
+                                <Image Source="{Binding dataItemsImageSource}" Width="230" Height="230" Grid.Column="0" VerticalAlignment="Top"></Image>
+                                <TextBlock Text="{Binding dataItemsName}" FontSize="18"></TextBlock>
+                                <Button Tag="{Binding dataItemsRadoiatorId}" Content="Подробнее" FontSize="14" Foreground="White" Background="#5A6986" Click="MoreInfo_Click"/>
+                                <Button Click="AddToCart_Click" Content="В корзину" FontSize="14" Foreground="White" Background="#5A6986"/>
                             </StackPanel>
                         </Grid>
                     </DataTemplate>
@@ -121,5 +119,6 @@
                 <Button Content="Выход" Click="Exit_Click" Style="{StaticResource FlatButtonStyle}"/>
             </StackPanel>
         </Border>
+           
     </Grid>
 </Window>

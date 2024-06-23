@@ -1,0 +1,102 @@
+﻿<Window x:Class="TeploKor.View.WindowNewBoiler"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:TeploKor.View"
+        mc:Ignorable="d"
+        Title="WindowNewBoiler" Height="500" Width="800">
+    <Window.Resources>
+        <Style TargetType="Button" x:Key="RoundCornerButton">
+            <Setter Property="Background" Value="LightBlue"/>
+            <Setter Property="BorderBrush" Value="Transparent"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Padding" Value="10"/>
+            <Setter Property="HorizontalContentAlignment" Value="Center"/>
+            <Setter Property="VerticalContentAlignment" Value="Center"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border CornerRadius="10" Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" Padding="{TemplateBinding Padding}">
+                            <ContentPresenter HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Background" Value="SkyBlue"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+    </Window.Resources>
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="15"></ColumnDefinition>
+            <ColumnDefinition Width="175"></ColumnDefinition>
+            <ColumnDefinition Width="25"></ColumnDefinition>
+            <ColumnDefinition Width="175"></ColumnDefinition>
+            <ColumnDefinition Width="15"></ColumnDefinition>
+            <ColumnDefinition Width="175"></ColumnDefinition>
+            <ColumnDefinition Width="25"></ColumnDefinition>
+            <ColumnDefinition Width="175"></ColumnDefinition>
+            <ColumnDefinition Width="15"></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="50"></RowDefinition>
+            <RowDefinition Height="50"></RowDefinition>
+            <RowDefinition Height="50"></RowDefinition>
+            <RowDefinition Height="50"></RowDefinition>
+            <RowDefinition Height="50"></RowDefinition>
+            <RowDefinition Height="50"></RowDefinition>
+            <RowDefinition Height="50"></RowDefinition>
+            <RowDefinition Height="7.54"></RowDefinition>
+            <RowDefinition Height="42.46"/>
+            <RowDefinition Height="50"></RowDefinition>
+            <RowDefinition Height="50"></RowDefinition>
+        </Grid.RowDefinitions>
+        <StackPanel Background="#FFF7E0" Grid.ColumnSpan="9" Margin="0,0,-5,0"></StackPanel>
+        <Image HorizontalAlignment="Left" Source="../res/img/logo.png" Height="50" Width="92" Grid.ColumnSpan="2"></Image>
+
+        <TextBlock Text="Котел" FontSize="20" Grid.Row="1" Grid.ColumnSpan="2" Margin="0,0,0,2"/>
+
+        <TextBlock Text="Название: " FontSize="16" Grid.Column="1" Grid.Row="2" VerticalAlignment="Center"/>
+        <TextBox Text="{Binding boilerName}" Grid.Column="3" Grid.Row="2" Margin="5,0,5,0"/>
+
+        <TextBlock Text="Описание: " FontSize="16" Grid.Column="1" Grid.Row="3" VerticalAlignment="Center"/>
+        <TextBox Text="{Binding boilerDescription}" Grid.Column="3" Grid.Row="3" Margin="5,0,5,0"/>
+
+        <TextBlock Text="Площадь (м2): " FontSize="16" Grid.Column="1" Grid.Row="4" VerticalAlignment="Center"/>
+        <TextBox Text="{Binding boilerSquare}" Grid.Column="3" Grid.Row="4" Margin="5,0,5,0"/>
+
+        <TextBlock Text="Тип: " FontSize="16" Grid.Column="1" Grid.Row="5" VerticalAlignment="Center"/>
+        <ComboBox ItemsSource="{Binding BoilerTypes}" SelectedItem="{Binding BoilerType}" Grid.Column="3" Grid.Row="5" Margin="5,0,5,0"/>
+
+
+        <TextBlock Text="Мощность (кВт): " FontSize="16" Grid.Column="5" Grid.Row="2" VerticalAlignment="Center"/>
+        <TextBox Text="{Binding boilerKikowatt}" Grid.Column="7" Grid.Row="2" Margin="5,0,5,0"/>
+
+        <TextBlock Text="Бренд: " FontSize="16" Grid.Column="5" Grid.Row="3" VerticalAlignment="Center"/>
+        <TextBox Text="{Binding boilerBrand}" Grid.Column="7" Grid.Row="3" Margin="5,0,5,0"/>
+
+        <TextBlock Text="Цена: " FontSize="16" Grid.Column="5" Grid.Row="4" VerticalAlignment="Center"/>
+        <TextBox Text="{Binding boilerPrice}" Grid.Column="7" Grid.Row="4" Margin="5,0,5,0"/>
+
+        <TextBlock Text="Место установки: " FontSize="16" Grid.Column="1" Grid.Row="6" VerticalAlignment="Center"/>
+        <ComboBox ItemsSource="{Binding BoilerInstallationLocations}" SelectedItem="{Binding BoilerInstallationLocation}" Grid.Column="3" Grid.Row="6" Margin="5,0,5,0"/>
+
+
+        <TextBlock Text="Вид: " FontSize="16" Grid.Column="5" Grid.Row="5" VerticalAlignment="Center"/>
+        <ComboBox ItemsSource="{Binding BoilerElectricTypes}" SelectedItem="{Binding BoilerElectricOrNot}" Grid.Column="7" Grid.Row="5" Margin="5,0,5,0"/>
+
+
+        <TextBlock Text="Турбонаддув: " FontSize="16" Grid.Column="5" Grid.Row="6" VerticalAlignment="Center"/>
+        <ComboBox ItemsSource="{Binding BoilerTurbochargedTypes}" SelectedItem="{Binding BoilerTurbochargedOrNot}" Grid.Column="7" Grid.Row="6" Margin="5,0,5,0"/>
+
+
+        <Button FontSize="18" Content="Выбрать фото котла" Click="SelectFile_Click" Grid.Column="1" Margin="10,2,10,10" Grid.Row="8" Grid.ColumnSpan="7"/>
+
+        <Button FontSize="18"  Click="BtCancel_Click" Background="#4183A6" Foreground="White" Content="Отменить" Style="{StaticResource RoundCornerButton}" Grid.Column="1" Grid.Row="9" />
+        <Button FontSize="18"  Click="BtSave_Click" Background="#4183A6" Foreground="White" Content="Сохранить" Style="{StaticResource RoundCornerButton}" Grid.Column="7" Grid.Row="9" />
+    </Grid>
+</Window>

@@ -16,9 +16,9 @@ using TeploKor.Model;
 
 namespace TeploKor.View
 {
-    public partial class WindowNewEmployee : Window
+    public partial class WindowNewRadiator : Window
     {
-        public WindowNewEmployee()
+        public WindowNewRadiator()
         {
             InitializeComponent();
         }
@@ -30,6 +30,16 @@ namespace TeploKor.View
         {
             DialogResult = false;
         }
-        
+        public Radiator radiator = new Radiator();
+        public void SelectFile_Click(object sender, RoutedEventArgs e)
+        {
+            OpenFileDialog openFileDialog = new OpenFileDialog();
+            openFileDialog.Filter = "Image files (*.jpg, *.jpeg, *.png)|*.jpg;*.jpeg;*.png";
+
+            if (openFileDialog.ShowDialog() == true)
+            {
+                radiator.radiatorImageSource = openFileDialog.FileName;
+            }
+        }
     }
 }
