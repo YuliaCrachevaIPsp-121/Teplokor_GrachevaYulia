@@ -145,17 +145,18 @@ namespace TeploKor.View
 
                 // данные
 
-                excelWorksheet.Cells["A1"].Value = radiatorLengthTextBlock.Text;
+                excelWorksheet.Cells["A1"].Value = radiatorNameTextBlock.Text;
 
                 excelWorksheet.Cells["A2"].Value = radiatorHeightTextBlock.Text;
 
                 excelWorksheet.Cells["A3"].Value = radiatorMaterialTextBlock.Text;
 
-                excelWorksheet.Cells["A3"].Value = radiatorThicknessTextBlock.Text;
+                excelWorksheet.Cells["A4"].Value = radiatorThicknessTextBlock.Text;
 
-                excelWorksheet.Cells["A4"].Value = radiatorPriceTextBlock.Text;
+                excelWorksheet.Cells["A5"].Value = radiatorPriceTextBlock.Text;
+                excelWorksheet.Cells["A6"].Value = radiatorLengthTextBlock.Text;
 
-                excelWorksheet.Cells["A6"].Value = "Заказы";
+                excelWorksheet.Cells["A7"].Value = "Заказы";
                 using (MyDbContext db = new MyDbContext()) // добавляем объявление и инициализацию переменной db
                 {
                     int radiatorId = selectedRadiator.radiatorId;
@@ -168,7 +169,7 @@ namespace TeploKor.View
                         $"JOIN Client cl on cl.clientId = ord.clientId " +
                         $"WHERE ord.RadiatorId = {selectedRadiator.radiatorId}");
                     // добавляем данные заказов в таблицу Excel
-                    int rowIndex = 7;
+                    int rowIndex = 8;
                     if (orders.Any())
                     {
                         foreach (var order in orders)
@@ -263,6 +264,7 @@ namespace TeploKor.View
                 // сохраняем файл Excel
                 FileInfo fileInfo = new FileInfo(@"D:\TeploKor\TeploKor\Excel\radiator.xlsx");
                 excelPackage.SaveAs(fileInfo);
+                MessageBox.Show("Отчет успешно создан", "Успех", MessageBoxButton.OK);
             }
         }
     }
