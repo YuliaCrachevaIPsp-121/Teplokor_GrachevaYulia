@@ -140,6 +140,10 @@ namespace TeploKor.Model
             this.boilerType = boilerType;
             this.boilerImageSource = boilerPhoto;
         }
+        public Boiler ShallowCopy()
+        {
+            return (Boiler)this.MemberwiseClone();
+        }
 
         public event PropertyChangedEventHandler PropertyChanged;
         protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = "")

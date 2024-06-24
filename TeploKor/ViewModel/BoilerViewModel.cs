@@ -1,16 +1,21 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using TeploKor.Helper;
 using TeploKor.Model;
+using TeploKor.View;
 
 namespace TeploKor.ViewModel
 {
-
     public class BoilerViewModel : INotifyPropertyChanged
     {
+        private CurrentUser currentUser;
         public ObservableCollection<Boiler> ListBoiler { get; set; }
         public static int BoilerId;
         public int MaxId()
@@ -28,14 +33,14 @@ namespace TeploKor.ViewModel
 
         public ObservableCollection<Radiator> ListRadiator { get; set; }
         public static int RadiatorId;
-        public int MaxId()
+        public int MaxRadiatorId()
         {
             int max = 0;
-            if (this.ListBoiler != null)
+            if (this.ListRadiator != null)
             {
                 foreach (var cl in this.ListRadiator)
                 {
-                    if (max < cl.radiatorId) max = cl.boilerId;
+                    if (max < cl.radiatorId) max = cl.radiatorId;
                 }
             }
             return max;
@@ -65,95 +70,190 @@ namespace TeploKor.ViewModel
                 return editBoiler ??
                 (editBoiler = new RelayCommand(obj =>
                 {
-                    WindowNewBoiler wnBoiler = new WindowNewBoiler
+                    WindowNewBoiler wnBoiler = new WindowNewBoiler(currentUser)
                     { Title = "Редактирование котла" };
 
                     Boiler boiler = SelectedBoiler;
-                    Boiler tempBoiler = new Employee();
+                    Boiler tempBoiler = new Boiler();
 
-                    tempEmployee = employee.ShallowCopy();
+                    tempBoiler = boiler.ShallowCopy();
                     wnBoiler.DataContext = tempBoiler;
                     if (wnBoiler.ShowDialog() == true)
                     {
-                        boiler.boilerId = 
-                        boiler.boilerBrand = tempBoiler.employeeChildrenBirthCertificateNumber;
-                        boiler.boilerName = tempBoiler.employeeContactNumber;
-                        boiler.boilerDescription = tempBoiler.employeeEducation;
-                        boiler.boilerPrice = tempBoiler.employeeNumberPassport;
-                        boiler.boilerSquare = tempBoiler.employeeSurname;
-                        boiler.boilerElectricOrNot = tempBoiler.employeeName;
-                        boiler.boilerKikowatt = tempBoiler.employeePatronymic;
-                        boiler.boilerInstallationLocation = tempBoiler.employeeEducationNumber;
-                        boiler.boilerTurbochargedOrNot = tempBoiler.employeeNumberWorkBook;
-                        boiler.boilerType = tempBoiler.employeeNumberOfMilitaryId;
-                        boiler.boilerImageSource = tempBoiler.employeeEducationSeries;
+                        boiler.boilerId = tempBoiler.boilerId;
+                        boiler.boilerBrand = tempBoiler.boilerBrand;
+                        boiler.boilerName = tempBoiler.boilerName;
+                        boiler.boilerDescription = tempBoiler.boilerDescription;
+                        boiler.boilerPrice = tempBoiler.boilerPrice;
+                        boiler.boilerSquare = tempBoiler.boilerSquare;
+                        boiler.boilerElectricOrNot = tempBoiler.boilerElectricOrNot;
+                        boiler.boilerKikowatt = tempBoiler.boilerKikowatt;
+                        boiler.boilerInstallationLocation = tempBoiler.boilerInstallationLocation;
+                        boiler.boilerTurbochargedOrNot = tempBoiler.boilerTurbochargedOrNot;
+                        boiler.boilerType = tempBoiler.boilerType;
+                        boiler.boilerImageSource = tempBoiler.boilerImageSource;
 
                         MyDbContext dbContext = new MyDbContext();
-                        dbContext.UpdateEntity<boiler>(tempEmployee);
+                        dbContext.UpdateEntity<Boiler>(tempBoiler);
                     }
                 }, (obj) => SelectedBoiler != null && ListBoiler.Count > 0));
             }
         }
 
-
-        private Employee selectedEmployee;
-        public Employee SelectedEmployee
+        private Boiler selectedBoiler;
+        public Boiler SelectedBoiler
         {
             get
             {
-                return selectedEmployee;
+                return selectedBoiler;
             }
             set
             {
-                selectedEmployee = value;
-                OnPropertyChanged("SelectedEmployee");
-                EditEmployee.CanExecute(true);
+                selectedBoiler = value;
+                OnPropertyChanged("SelectedBoiler");
+                EditBoiler.CanExecute(true);
             }
         }
 
-        private RelayCommand addEmployee;
-        public RelayCommand AddEmployee
+        private RelayCommand addBoiler;
+        public RelayCommand AddBoiler
         {
             get
             {
-                return addEmployee ??
-                 (addEmployee = new RelayCommand(obj =>
+                return addBoiler ??
+                 (addBoiler = new RelayCommand(obj =>
                  {
-                     WindowNewEmployee wnEmployee = new WindowNewEmployee
+                     WindowNewBoiler wnBoiler = new WindowNewBoiler(currentUser)
                      {
-                         Title = "Новый сотрудник",
+                         Title = "Новый котел",
                      };
-                     int maxIdEmployee = MaxId() + 1;
-                     Employee employee = new Employee { employeeId = maxIdEmployee };
-                     wnEmployee.DataContext = employee;
-                     if (wnEmployee.ShowDialog() == true)
+                     int maxIdBoiler = MaxId() + 1;
+                     Boiler boiler = new Boiler { boilerId = maxIdBoiler };
+                     wnBoiler.DataContext = boiler;
+                     if (wnBoiler.ShowDialog() == true)
                      {
-                         ListEmployee.Add(employee);
+                         ListBoiler.Add(boiler);
                          MyDbContext dbContext = new MyDbContext();
-                         dbContext.SaveEntity<Employee>(dbContext, employee);
+                         dbContext.SaveEntity<Boiler>(dbContext, boiler);
                      }
-                     SelectedEmployee = employee;
+                     SelectedBoiler = boiler;
                  }));
             }
         }
 
-        private RelayCommand deleteEmployee;
-        public RelayCommand DeleteEmployee
+        private RelayCommand deleteBoiler;
+        public RelayCommand DeleteBoiler
         {
             get
             {
-                return deleteEmployee ??
-                (deleteEmployee = new RelayCommand(obj =>
+                return deleteBoiler ??
+                (deleteBoiler = new RelayCommand(obj =>
                 {
-                    Employee employee = SelectedEmployee;
-                    MessageBoxResult result = MessageBox.Show("Удалить данные по сотруднику: " + employee.employeeSurname + " " + employee.employeeName + " " + employee.employeePatronymic, "Предупреждение", MessageBoxButton.OKCancel, MessageBoxImage.Warning);
+                    Boiler boiler = SelectedBoiler;
+                    MessageBoxResult result = MessageBox.Show("Удалить данные по котлу: " + boiler.boilerName, "Предупреждение", MessageBoxButton.OKCancel, MessageBoxImage.Warning);
                     if (result == MessageBoxResult.OK)
                     {
-                        ListEmployee.Remove(employee);
+                        ListBoiler.Remove(boiler);
                         MyDbContext dbContext = new MyDbContext();
-                        dbContext.DeleteEntityFromDatabase<Employee>(employee);
+                        dbContext.DeleteEntityFromDatabase<Boiler>(boiler);
                     }
-                }, (obj) => SelectedEmployee != null && ListEmployee.Count > 0));
+                }, (obj) => SelectedBoiler != null && ListBoiler.Count > 0));
+            }
+        }
+
+        private RelayCommand editRadiator;
+        public RelayCommand EditRadiator
+        {
+            get
+            {
+                return editRadiator ??
+                (editRadiator = new RelayCommand(obj =>
+                {
+                    WindowNewRadiator wnRadiator = new WindowNewRadiator
+                    { Title = "Редактирование радиатора" };
+
+                    Radiator radiator = SelectedRadiator;
+                    Radiator tempRadiator = new Radiator();
+
+                    tempRadiator = radiator.ShallowCopy();
+                    wnRadiator.DataContext = tempRadiator;
+                    if (wnRadiator.ShowDialog() == true)
+                    {
+                        radiator.radiatorId = tempRadiator.radiatorId;
+                        radiator.radiatorMaterial = tempRadiator.radiatorMaterial;
+                        radiator.radiatorThickness = tempRadiator.radiatorThickness;
+                        radiator.radiatorLength = tempRadiator.radiatorLength;
+                        radiator.radiatorHeight = tempRadiator.radiatorHeight;
+                        radiator.radiatorBrand = tempRadiator.radiatorBrand;
+                        radiator.radiatorName = tempRadiator.radiatorName;
+                        radiator.radiatorPrice = tempRadiator.radiatorPrice;
+                        radiator.radiatorImageSource = tempRadiator.radiatorImageSource;
+
+                        MyDbContext dbContext = new MyDbContext();
+                        dbContext.UpdateEntity<Radiator>(tempRadiator);
+                    }
+                }, (obj) => SelectedRadiator != null && ListRadiator.Count > 0));
+            }
+        }
+
+        private Radiator selectedRadiator;
+        public Radiator SelectedRadiator
+        {
+            get
+            {
+                return selectedRadiator;
+            }
+            set
+            {
+                selectedRadiator = value;
+                OnPropertyChanged("SelectedRadiator");
+                EditRadiator.CanExecute(true);
+            }
+        }
+
+        private RelayCommand addRadiator;
+        public RelayCommand AddRadiator
+        {
+            get
+            {
+                return addRadiator ??
+                 (addRadiator = new RelayCommand(obj =>
+                 {
+                     WindowNewRadiator wnRadiator = new WindowNewRadiator
+                     {
+                         Title = "Новый радиатор",
+                     };
+                     int maxIdRadiator = MaxRadiatorId() + 1;
+                     Radiator boiler = new Radiator { radiatorId = maxIdRadiator };
+                     wnRadiator.DataContext = boiler;
+                     if (wnRadiator.ShowDialog() == true)
+                     {
+                         ListRadiator.Add(boiler);
+                         MyDbContext dbContext = new MyDbContext();
+                         dbContext.SaveEntity<Radiator>(dbContext, boiler);
+                     }
+                     SelectedRadiator = boiler;
+                 }));
+            }
+        }
+
+        private RelayCommand deleteRadiator;
+        public RelayCommand DeleteRadiator
+        {
+            get
+            {
+                return deleteRadiator ??
+                (deleteRadiator = new RelayCommand(obj =>
+                {
+                    Radiator radiator = SelectedRadiator;
+                    MessageBoxResult result = MessageBox.Show("Удалить данные по радиатору: " + radiator.radiatorName, "Предупреждение", MessageBoxButton.OKCancel, MessageBoxImage.Warning);
+                    if (result == MessageBoxResult.OK)
+                    {
+                        ListRadiator.Remove(radiator);
+                        MyDbContext dbContext = new MyDbContext();
+                        dbContext.DeleteEntityFromDatabase<Radiator>(radiator);
+                    }
+                }, (obj) => SelectedRadiator != null && ListRadiator.Count > 0));
             }
         }
 

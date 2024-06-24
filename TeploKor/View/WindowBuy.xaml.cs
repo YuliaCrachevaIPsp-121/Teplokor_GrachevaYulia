@@ -1,6 +1,7 @@
 ﻿using OfficeOpenXml.Export.HtmlExport.StyleCollectors.StyleContracts;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -22,8 +23,8 @@ namespace TeploKor.View
         private Order _order;
         private CurrentUser currentUser;
         private Cart CurrentCart;
-
-        public WindowBuy(CurrentUser currentUser)
+        public ObservableCollection<DataItemsCart> FilteredDataItemsCart { get; set; }
+        public WindowBuy(CurrentUser currentUser, ObservableCollection<DataItemsCart> FilteredDataItemsCart)
         {
             InitializeComponent();
             this.currentUser = currentUser;
@@ -33,41 +34,58 @@ namespace TeploKor.View
 
             PaymentMethodComboBox.ItemsSource = new List<string> { "Наличные", "Картой" };
             PaymentMethodComboBox.SelectedItem = _order.orderPaymentMethod;
+
+            this.FilteredDataItemsCart = FilteredDataItemsCart;
         }
         private void BtSave_Click(object sender, RoutedEventArgs e)
         {
-            using (MyDbContext db = new MyDbContext())
-            {
-                // Создаем новый заказ
-                Order order = new Order
-                {
-                    clientId = currentUser.UserId,
-                    orderDeliveryMethod = DeliveryMethodComboBox.SelectedItem.ToString(),
-                    orderPaymentMethod = PaymentMethodComboBox.SelectedItem.ToString(),
-                    orderDeliveryAddressCountry = orderDeliveryAddressCountryTextBox.Text,
-                    orderDeliveryAddressStreet = orderDeliveryAddressStreetTextBox.Text,
-                    orderDeliveryAddressHome = orderDeliveryAddressHomeTextBox.Text,
-                    orderDeliveryAddressNumberApartament = orderDeliveryAddressNumberApartamentTextBox.Text,
-                    orderCost = GetCostFromCart(),
-                    orderStatus = "Новый"
-                };
+            //Order newOrder = new Order();
+            //newOrder.orderDeliveryMethod = DeliveryMethodComboBox.SelectedItem.ToString();
+            //newOrder.orderPaymentMethod = PaymentMethodComboBox.SelectedItem.ToString();
+            //newOrder.orderDeliveryAddressCountry = orderDeliveryAddressCountryTextBox.Text;
+            //newOrder.orderDeliveryAddressStreet = orderDeliveryAddressStreetTextBox.Text;
+            //newOrder.orderDeliveryAddressHome = orderDeliveryAddressHomeTextBox.Text;
+            //newOrder.orderDeliveryAddressNumberApartament = orderDeliveryAddressNumberApartamentTextBox.Text;
+            //newOrder.clientId = currentUser.UserId; // Предполагая, что currentUser содержит текущего пользователя
+            //newOrder.orderStatus = "Создан";
 
-                // Добавляем заказ в базу данных
-                db.Order.Add(order);
-                db.SaveChanges();
+            //// Получаем id радиатора или бойлера из корзины
+            //int? productId = null;
+            //DataItemsCart cartItem = null;
+            //if (FilteredDataItemsCart.Count == 1)
+            //{
+            //    cartItem = FilteredDataItemsCart.First();
+            //    if (cartItem.d == typeof(Radiator))
+            //    {
+            //        productId = cartItem.radiatorId;
+            //    }
+            //    else if (cartItem.dataItemsCartType == typeof(Boiler))
+            //    {
+            //        productId = cartItem.boilerId;
+            //    }
+            //}
 
-                // Получаем id только что созданного заказа
-                int orderId = order.orderId;
+            //// Сохраняем id радиатора или бойлера в заказе
+            //if (productId.HasValue && cartItem != null)
+            //{
+            //    newOrder.RadiatorId = cartItem.dataItemsCartType == typeof(Radiator) ? productId.Value : (int?)null;
+            //    newOrder.BoilerId = cartItem.dataItemsCartType == typeof(Boiler) ? productId.Value : (int?)null;
+            //}
 
-                // Получаем все товары из корзины
-                List<Cart> cartItems = GetCartItems();
+            //// Здесь вы можете добавить логику для подсчета стоимости заказа (orderCost)
+            //newOrder.orderCost = GetCostFromCart();
 
-                // Очищаем корзину
-                ClearCart();
+            //// Сохраняем заказ в базе данных
+            //using (MyDbContext db = new MyDbContext())
+            //{
+            //    db.Order.Add(newOrder);
+            //    db.SaveChanges();
+            //}
 
-                // Закрываем окно
-                this.Close();
-            }
+            ClearCart();
+
+            // Закрываем текущее окно
+            this.Close();
         }
 
         private decimal GetCostFromCart()
@@ -80,7 +98,7 @@ namespace TeploKor.View
             // Вычисляем общую стоимость товаров в корзине
             foreach (Cart cartItem in cartItems)
             {
-                cost +=  cartItem.cartPrice;
+                cost += cartItem.cartPrice;
             }
 
             return cost;
@@ -97,7 +115,6 @@ namespace TeploKor.View
             }
         }
 
-
         private void ClearCart()
         {
             using (MyDbContext db = new MyDbContext())
@@ -112,7 +129,6 @@ namespace TeploKor.View
                 }
             }
         }
-
 
         private void BtCancel_Click(object sender, RoutedEventArgs e)
         {

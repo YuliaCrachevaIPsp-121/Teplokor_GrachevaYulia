@@ -34,6 +34,14 @@ namespace TeploKor.View
             windowRegistration.Show();
             this.Close();
         }
+        private void TextBox_GotFocus(object sender, RoutedEventArgs e)
+        {
+            TextBox textBox = sender as TextBox;
+            if (textBox != null)
+            {
+                textBox.Text = "";
+            }
+        }
 
         private void LoginButton_Click(object sender, RoutedEventArgs e)
         {
@@ -56,15 +64,16 @@ namespace TeploKor.View
                         this.Close();
                         return;
                     }
-                // Проверяем, существует ли пользователь в таблице Employee
+                
                 var employee = db.Employee.FromSqlRaw(
     $"SELECT * FROM Employee WHERE employeeLogin = '{login}' AND employeePassword = '{password}'")
     .FirstOrDefault();
                 if (employee != null)
                 {
-                    CurrentUser.UserId = employee.employeeId; // extract the employeeId property from the Employee object
+                    CurrentUser.UserId = employee.employeeId; 
                     if (employee.IsAdmin)
                     {
+                        CurrentUser.IsAdmin = true;
                         MessageBox.Show($"Добро пожаловать, администратор {employee.employeeSurname} {employee.employeeName}!");
                         WindowClient windowClient = new WindowClient(CurrentUser);
                         windowClient.Show();
@@ -72,6 +81,7 @@ namespace TeploKor.View
                     }
                     else
                     {
+                        CurrentUser.IsEmployee = true;
                         MessageBox.Show($"Добро пожаловать, сотрудник {employee.employeeSurname} {employee.employeeName}!");
                         WindowClient windowClient = new WindowClient(CurrentUser);
                         windowClient.Show();
@@ -81,6 +91,7 @@ namespace TeploKor.View
                 }
                 else
                 {
+                    
                     MessageBox.Show("Неправильный логин или пароль.");
                     LoginTextBox.Clear();
                     PasswordTextBox.Clear();

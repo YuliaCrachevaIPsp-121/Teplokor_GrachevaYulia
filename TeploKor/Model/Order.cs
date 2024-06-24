@@ -24,14 +24,15 @@ namespace TeploKor.Model
         public decimal orderCost { get; set; }
         [ForeignKey("Client")]
         public int clientId { get; set; }
-        [ForeignKey("Boiler")]
-        public int? boilerId { get; set; }
         [ForeignKey("Radiator")]
-        public int? radiatorId { get; set; }
+        public int? RadiatorId { get; set; }
+
+        [ForeignKey("Boiler")]
+        public int? BoilerId { get; set; }
         public string orderStatus { get; set; }
         public Order() { }
 
-        public Order(int orderId, string orderDeliveryMethod, string orderPaymentMethod, string? orderDeliveryAddressCountry, string? orderDeliveryAddressStreet, string? orderDeliveryAddressHome, string? orderDeliveryAddressNumberApartament, decimal orderCost, int clientId, int employeeId, string orderStatus)
+        public Order(int orderId, string orderDeliveryMethod, string orderPaymentMethod, string? orderDeliveryAddressCountry, string? orderDeliveryAddressStreet, string? orderDeliveryAddressHome, string? orderDeliveryAddressNumberApartament, decimal orderCost, int clientId, int employeeId, string orderStatus, int? boilerId, int? radiatorId)
         {
             this.orderId = orderId;
             this.orderDeliveryMethod = orderDeliveryMethod;
@@ -43,6 +44,8 @@ namespace TeploKor.Model
             this.orderCost = orderCost;
             this.clientId = clientId;
             this.orderStatus = orderStatus;
+            this.BoilerId = boilerId;
+            this.RadiatorId = radiatorId;
         }
 
         public event PropertyChangedEventHandler PropertyChanged;

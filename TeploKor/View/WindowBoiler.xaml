@@ -1,4 +1,4 @@
-﻿<Window x:Class="TeploKor.View.WindowBoiler"
+﻿<Window x:Class="TeploKor.View.WindowBoiler" WindowStartupLocation="CenterScreen"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
@@ -101,7 +101,7 @@
                                 <Image Source="{Binding dataItemsImageSource}" Width="230" Height="230" Grid.Column="0" VerticalAlignment="Top"></Image>
                                 <TextBlock Text="{Binding dataItemsName}" FontSize="18"></TextBlock>
                                 <Button Tag="{Binding dataItemsBoilerId}" Content="Подробнее" FontSize="14" Foreground="White" Background="#5A6986" Click="MoreInfo_Click"/>
-                                <Button Click="AddToCart_Click" Content="В корзину" FontSize="14" Foreground="White" Background="#5A6986"/>
+                                <Button x:Name="CartBuyButton" Click="AddToCart_Click" Content="В корзину" FontSize="14" Foreground="White" Background="#5A6986"/>
                             </StackPanel>
                         </Grid>
                     </DataTemplate>
@@ -113,8 +113,7 @@
                 <Button Content="Профиль" Click="Profile_Click" Style="{StaticResource FlatButtonStyle}"/>
                 <Button Content="Бойлер" Click="Boiler_Click" Style="{StaticResource FlatButtonStyle}"/>
                 <Button Content="Радиаторы" Click="Radiator_Click" Style="{StaticResource FlatButtonStyle}"/>
-                <Button Content="Корзина" Click="Cart_Click" Style="{StaticResource FlatButtonStyle}"/>
-                <Button x:Name="OrdersButton" Content="Заказы клиентов" Click="Orders_Click" Visibility="Collapsed" Style="{StaticResource FlatButtonStyle}"/>
+                <Button x:Name="CartButton"  Content="Корзина" Click="Cart_Click" Style="{StaticResource FlatButtonStyle}"/>
                 <Button x:Name="ProductsButton" Content="Управление товарами" Click="Products_Click" Visibility="Collapsed" Style="{StaticResource FlatButtonStyle}"/>
                 <Button x:Name="EmployeesButton" Content="Сотрудники" Click="Employees_Click" Visibility="Collapsed" Style="{StaticResource FlatButtonStyle}"/>
                 <Button x:Name="ProductButton" Content="Управление товарами" Click="Product_Click" Visibility="Collapsed" Style="{StaticResource FlatButtonStyle}"/>

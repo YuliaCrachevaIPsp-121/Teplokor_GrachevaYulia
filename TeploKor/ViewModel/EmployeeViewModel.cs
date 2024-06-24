@@ -40,7 +40,7 @@ namespace TeploKor.ViewModel
             // Преобразование в ObservableCollection
             ListEmployee = new ObservableCollection<Employee>(employees);
         }
-
+        private CurrentUser currentUser;
         private RelayCommand editEmployee;
         public RelayCommand EditEmployee
         {
@@ -49,7 +49,7 @@ namespace TeploKor.ViewModel
                 return editEmployee ??
                 (editEmployee = new RelayCommand(obj =>
                 {
-                    WindowNewEmployee wnEmployee = new WindowNewEmployee
+                    WindowNewEmployee wnEmployee = new WindowNewEmployee(currentUser)
                     { Title = "Редактирование сотрудника" };
 
                     Employee employee = SelectedEmployee;
@@ -110,7 +110,7 @@ namespace TeploKor.ViewModel
                 return addEmployee ??
                  (addEmployee = new RelayCommand(obj =>
                  {
-                     WindowNewEmployee wnEmployee = new WindowNewEmployee
+                     WindowNewEmployee wnEmployee = new WindowNewEmployee(currentUser)
                      {
                          Title = "Новый сотрудник",
                      };

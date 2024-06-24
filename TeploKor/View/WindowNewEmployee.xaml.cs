@@ -18,9 +18,11 @@ namespace TeploKor.View
 {
     public partial class WindowNewEmployee : Window
     {
-        public WindowNewEmployee()
+        private CurrentUser currentUser;
+        public WindowNewEmployee(CurrentUser currentUser)
         {
             InitializeComponent();
+            this.currentUser = currentUser;
         }
         private void BtSave_Click(object sender, RoutedEventArgs e)
         {

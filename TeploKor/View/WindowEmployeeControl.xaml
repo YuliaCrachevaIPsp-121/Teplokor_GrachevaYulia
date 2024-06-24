@@ -1,4 +1,4 @@
-﻿<Window x:Class="TeploKor.View.WindowEmployeeControl"
+﻿<Window x:Class="TeploKor.View.WindowEmployeeControl" WindowStartupLocation="CenterScreen"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
@@ -125,19 +125,16 @@
                 <StackPanel>
                     <Border Background="#E1F5FF" CornerRadius="40" Width="1122">
                         <StackPanel Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="6" Margin="10,0,10,0">
-                            <ListView ItemsSource="{Binding ListBoiler}" SelectedItem="{Binding SelectedBoiler}" FontSize="14" x:Name="lvRadiator" Background="#E1F5FF" Height="477" Width="1040">
+                            <ListView ItemsSource="{Binding ListRadiator}" SelectedItem="{Binding SelectedRadiator}" FontSize="14" x:Name="lvRadiator" Background="#E1F5FF" Height="477" Width="1040">
                                 <ListView.View>
                                     <GridView>
-                                        <GridViewColumn Width="Auto" DisplayMemberBinding="{Binding boilerBrand}" Header="Бренд"/>
-                                        <GridViewColumn Width="Auto" DisplayMemberBinding="{Binding boilerName}" Header="Название"/>
-                                        <GridViewColumn Width="Auto" DisplayMemberBinding="{Binding boilerDescription}" Header="Описание"/>
-                                        <GridViewColumn Width="Auto" DisplayMemberBinding="{Binding boilerKikowatt}" Header="Мощность"/>
-                                        <GridViewColumn Width="Auto" DisplayMemberBinding="{Binding boilerType}" Header="Тип"/>
-                                        <GridViewColumn Width="Auto" DisplayMemberBinding="{Binding boilerElectricOrNot}" Header="Вид"/>
-                                        <GridViewColumn Width="Auto" DisplayMemberBinding="{Binding boilerTurbochargedOrNot}" Header="Турбонаддув"/>
-                                        <GridViewColumn Width="Auto" DisplayMemberBinding="{Binding boilerPrice}" Header="Цена"/>
-                                        <GridViewColumn Width="Auto" DisplayMemberBinding="{Binding boilerInstallationLocation}" Header="Установка"/>
-                                        <GridViewColumn Width="Auto" DisplayMemberBinding="{Binding boilerSquare}" Header="Площадь"/>
+                                        <GridViewColumn Width="Auto" DisplayMemberBinding="{Binding radiatorBrand}" Header="Бренд"/>
+                                        <GridViewColumn Width="Auto" DisplayMemberBinding="{Binding radiatorName}" Header="Название"/>
+                                        <GridViewColumn Width="Auto" DisplayMemberBinding="{Binding radiatorMaterial}" Header="Материал"/>
+                                        <GridViewColumn Width="Auto" DisplayMemberBinding="{Binding radiatorThickness}" Header="Толщина"/>
+                                        <GridViewColumn Width="Auto" DisplayMemberBinding="{Binding radiatorLength}" Header="Длина"/>
+                                        <GridViewColumn Width="Auto" DisplayMemberBinding="{Binding radiatorHeight}" Header="Высота"/>
+                                        <GridViewColumn Width="Auto" DisplayMemberBinding="{Binding radiatorPrice}" Header="Цена"/>
                                     </GridView>
                                 </ListView.View>
                             </ListView>
@@ -151,8 +148,7 @@
                 <Button Content="Профиль" Click="Profile_Click" Style="{StaticResource FlatButtonStyle}"/>
                 <Button Content="Бойлер" Click="Boiler_Click" Style="{StaticResource FlatButtonStyle}"/>
                 <Button Content="Радиаторы" Click="Radiator_Click" Style="{StaticResource FlatButtonStyle}"/>
-                <Button Content="Корзина" Click="Cart_Click" Style="{StaticResource FlatButtonStyle}"/>
-                <Button x:Name="OrdersButton" Content="Заказы клиентов" Click="Orders_Click" Visibility="Collapsed" Style="{StaticResource FlatButtonStyle}"/>
+                <Button x:Name="CartButton" Content="Корзина" Click="Cart_Click" Style="{StaticResource FlatButtonStyle}"/>
                 <Button x:Name="ProductsButton" Content="Управление товарами" Click="Products_Click" Visibility="Collapsed" Style="{StaticResource FlatButtonStyle}"/>
                 <Button x:Name="EmployeesButton" Content="Сотрудники" Click="Employees_Click" Visibility="Collapsed" Style="{StaticResource FlatButtonStyle}"/>
                 <Button x:Name="ProductButton" Content="Управление товарами" Click="Product_Click" Visibility="Collapsed" Style="{StaticResource FlatButtonStyle}"/>

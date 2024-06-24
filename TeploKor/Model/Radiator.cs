@@ -12,6 +12,7 @@ namespace TeploKor.Model
 {
     public class Radiator : INotifyPropertyChanged
     {
+
         [Key]
         public int radiatorId { get; set; }
         public string radiatorName { get; set; }
@@ -35,7 +36,10 @@ namespace TeploKor.Model
             this.radiatorPrice = price;
             this.radiatorImageSource = radiatorImageSource;
         }
-
+        public Radiator ShallowCopy()
+        {
+            return (Radiator)this.MemberwiseClone();
+        }
         public event PropertyChangedEventHandler PropertyChanged;
         protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = "")
         {

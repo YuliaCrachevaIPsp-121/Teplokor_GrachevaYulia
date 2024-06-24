@@ -11,14 +11,17 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using TeploKor.Model;
 
 namespace TeploKor.View
 {
     public partial class WindowNewClient : Window
     {
-        public WindowNewClient()
+        private CurrentUser currentUser;
+        public WindowNewClient(CurrentUser currentUser)
         {
             InitializeComponent();
+            this.currentUser = currentUser;
         }
         private void BtSave_Click(object sender, RoutedEventArgs e)
         {

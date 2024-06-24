@@ -1,4 +1,4 @@
-﻿<Window x:Class="TeploKor.View.WindowClient"
+﻿<Window x:Class="TeploKor.View.WindowClient" WindowStartupLocation="CenterScreen"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
@@ -85,11 +85,9 @@
                     <TextBlock x:Name="PhoneNumberTextBlock" Text="{Binding PhoneNumber}" FontSize="18"/>
                 </StackPanel>
                 <StackPanel HorizontalAlignment="Left" Margin="922,415,0,10" Width="176">
-                    <Button FontSize="16" Background="#4183A6" Foreground="White"  x:Name="HistoryButton" Click="History_Click" Style="{StaticResource RoundCornerButton}" Content="История заказов"></Button>
+                    <Button Command="{Binding EditClient}" FontSize="16"  Background="#4183A6" Foreground="White" x:Name="EditButton" Style="{StaticResource RoundCornerButton}" Content="Изменить"></Button>
                     <TextBlock Width="10"/>
-                    <Button FontSize="16"  Background="#4183A6" Foreground="White" x:Name="EditButton" Style="{StaticResource RoundCornerButton}" Content="Изменить"></Button>
-                    <TextBlock Width="10"/>
-                    <Button FontSize="16"  Background="#4183A6" Foreground="White" x:Name="DeleteButton" Click="Delete_Click"  Style="{StaticResource RoundCornerButton}" Content="Удалить"></Button>
+                    <Button  FontSize="16"  Background="#4183A6" Foreground="White" x:Name="DeleteButton" Click="Delete_Click"  Style="{StaticResource RoundCornerButton}" Content="Удалить"></Button>
                 </StackPanel>
             </Grid>
         </Border>
@@ -99,11 +97,9 @@
                 <Button Content="Профиль" Click="Profile_Click" Style="{StaticResource FlatButtonStyle}"/>
                 <Button Content="Бойлер" Click="Boiler_Click" Style="{StaticResource FlatButtonStyle}"/>
                 <Button Content="Радиаторы" Click="Radiator_Click" Style="{StaticResource FlatButtonStyle}"/>
-                <Button Content="Корзина" Click="Cart_Click" Style="{StaticResource FlatButtonStyle}"/>
-                <Button x:Name="OrdersButton" Content="Заказы клиентов" Click="Orders_Click" Visibility="Collapsed" Style="{StaticResource FlatButtonStyle}"/>
-                <Button x:Name="ProductsButton" Content="Управление товарами" Click="Products_Click" Visibility="Collapsed" Style="{StaticResource FlatButtonStyle}"/>
-                <Button x:Name="EmployeesButton" Content="Сотрудники" Click="Employees_Click" Visibility="Collapsed" Style="{StaticResource FlatButtonStyle}"/>
-                <Button x:Name="ProductButton" Content="Управление товарами" Click="Product_Click" Visibility="Collapsed" Style="{StaticResource FlatButtonStyle}"/>
+                <Button  x:Name="CartButton"  Content="Корзина" Click="Cart_Click" Style="{StaticResource FlatButtonStyle}"/>
+                <Button x:Name="ProductsButton" Content="Управление товарами" Click="Products_Click"  Style="{StaticResource FlatButtonStyle}"/>
+                <Button x:Name="EmployeesButton" Content="Сотрудники" Click="Employees_Click"  Style="{StaticResource FlatButtonStyle}"/>
                 <Button Content="Выход" Click="Exit_Click" Style="{StaticResource FlatButtonStyle}"/>
             </StackPanel>
         </Border>

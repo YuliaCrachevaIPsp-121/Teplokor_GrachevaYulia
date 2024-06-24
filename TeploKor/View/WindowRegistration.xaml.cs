@@ -96,6 +96,14 @@ namespace TeploKor.View
                 MessageBox.Show("Произошла ошибка при регистрации: " + ex.Message);
             }
         }
+        private void TextBox_GotFocus(object sender, RoutedEventArgs e)
+        {
+            TextBox textBox = sender as TextBox;
+            if (textBox != null)
+            {
+                textBox.Text = "";
+            }
+        }
 
         private bool IsValidName(string name)
         {

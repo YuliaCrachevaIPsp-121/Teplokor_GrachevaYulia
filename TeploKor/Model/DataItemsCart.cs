@@ -19,19 +19,21 @@ namespace TeploKor.Model
         public decimal dataItemsCartPrice { get; set; }
         [ForeignKey("Client")]
         public int clientId { get; set; }
+        public int cartId { get; set; }
         public DataItemsCart() { }
         private static int _idCounter;
         private static int GetNextId()
         {
             return ++_idCounter;
         }
-        public DataItemsCart(string dataItemsCartName, string dataItemsCartImageSource, decimal dataItemsCartPrice, int clientId)
+        public DataItemsCart(string dataItemsCartName, string dataItemsCartImageSource, decimal dataItemsCartPrice, int clientId, int cartId)
         {
             Id = GetNextId();
             this.dataItemsCartName = dataItemsCartName;
             this.dataItemsCartImageSource = dataItemsCartImageSource;
             this.dataItemsCartPrice = dataItemsCartPrice;
             this.clientId = clientId;
+            this.cartId = cartId;
         }
         public event PropertyChangedEventHandler PropertyChanged;
         protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = "")

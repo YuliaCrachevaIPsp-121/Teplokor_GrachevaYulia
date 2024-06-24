@@ -1,4 +1,4 @@
-﻿<Window x:Class="TeploKor.View.WindowBoilerInfo"
+﻿<Window x:Class="TeploKor.View.WindowBoilerInfo" WindowStartupLocation="CenterScreen"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
@@ -73,19 +73,7 @@
 
         <Image HorizontalAlignment="Left" Source="../res/img/logo.png" Height="50" Width="92" Grid.ColumnSpan="2"></Image>
         <Button Click="Menu_Click" Grid.Column="2" BorderBrush="Transparent" Background="#FFF7E0" Content="Меню" FontSize="18" Margin="357,0,-400,0" RenderTransformOrigin="4.324,0.841"/>
-        <Border Opacity="0" x:Name="MenuBorder" Background="#FFF7E0"  CornerRadius="40" Grid.Row="1" Grid.Column="2" Margin="230,0,-432,-134" Grid.RowSpan="3">
-            <StackPanel>
-                <Button Content="Профиль" Click="Profile_Click" Style="{StaticResource FlatButtonStyle}"/>
-                <Button Content="Бойлер" Click="Boiler_Click" Style="{StaticResource FlatButtonStyle}"/>
-                <Button Content="Радиаторы" Click="Radiator_Click" Style="{StaticResource FlatButtonStyle}"/>
-                <Button Content="Корзина" Click="Cart_Click" Style="{StaticResource FlatButtonStyle}"/>
-                <Button x:Name="OrdersButton" Content="Заказы клиентов" Click="Orders_Click" Visibility="Collapsed" Style="{StaticResource FlatButtonStyle}"/>
-                <Button x:Name="ProductsButton" Content="Управление товарами" Click="Products_Click" Visibility="Collapsed" Style="{StaticResource FlatButtonStyle}"/>
-                <Button x:Name="EmployeesButton" Content="Сотрудники" Click="Employees_Click" Visibility="Collapsed" Style="{StaticResource FlatButtonStyle}"/>
-                <Button x:Name="ProductButton" Content="Управление товарами" Click="Product_Click" Visibility="Collapsed" Style="{StaticResource FlatButtonStyle}"/>
-                <Button Content="Выход" Click="Exit_Click" Style="{StaticResource FlatButtonStyle}"/>
-            </StackPanel>
-        </Border>
+        
         <Border Background="#E1F5FF" CornerRadius="40" Margin="10,10,-390,-124" Grid.Column="1" Grid.Row="2" Grid.ColumnSpan="2" Grid.RowSpan="2">
             <StackPanel Orientation="Horizontal" Margin="10,10,10,10">
                 <Image x:Name="boilerImage" Source="{Binding boilerImageSource}" Margin="20,36,10,74" Width="290" Height="394"/>
@@ -107,6 +95,18 @@
                     <Button Click="Back_Click"  FontSize="18" Background="#4183A6" Foreground="White" Style="{StaticResource RoundCornerButton}"  Content="Вернуться назад" Height="56" Width="232"></Button>
                 </StackPanel>
                 </StackPanel>
+        </Border>
+        <Border Opacity="0" x:Name="MenuBorder" Background="#FFF7E0"  CornerRadius="40" Grid.Row="1" Grid.Column="2" Margin="230,0,-432,-134" Grid.RowSpan="3">
+            <StackPanel>
+                <Button Content="Профиль" Click="Profile_Click" Style="{StaticResource FlatButtonStyle}"/>
+                <Button Content="Бойлер" Click="Boiler_Click" Style="{StaticResource FlatButtonStyle}"/>
+                <Button Content="Радиаторы" Click="Radiator_Click" Style="{StaticResource FlatButtonStyle}"/>
+                <Button x:Name="CartButton"  Content="Корзина" Click="Cart_Click" Style="{StaticResource FlatButtonStyle}"/>
+                <Button x:Name="ProductsButton" Content="Управление товарами" Click="Products_Click" Visibility="Collapsed" Style="{StaticResource FlatButtonStyle}"/>
+                <Button x:Name="EmployeesButton" Content="Сотрудники" Click="Employees_Click" Visibility="Collapsed" Style="{StaticResource FlatButtonStyle}"/>
+                <Button x:Name="ProductButton" Content="Управление товарами" Click="Product_Click" Visibility="Collapsed" Style="{StaticResource FlatButtonStyle}"/>
+                <Button Content="Выход" Click="Exit_Click" Style="{StaticResource FlatButtonStyle}"/>
+            </StackPanel>
         </Border>
     </Grid>
 </Window>

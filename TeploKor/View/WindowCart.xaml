@@ -1,4 +1,4 @@
-﻿<Window x:Class="TeploKor.View.WindowCart"
+﻿<Window x:Class="TeploKor.View.WindowCart" WindowStartupLocation="CenterScreen"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
@@ -76,8 +76,6 @@
 
         <TextBlock Text="Корзина"  FontSize="24" Margin="0,43,3,1" Grid.ColumnSpan="2" Grid.RowSpan="2"/>
 
-        <Button  Background="#4183A6" Foreground="White" Style="{StaticResource RoundCornerButton}" FontSize="20" Content="Удалить все" Grid.Column="1" Grid.Row="2" Margin="0,3,360,3"/>
-
         <ScrollViewer Margin="10,2,-59,-134" Grid.Row="3" Grid.ColumnSpan="3">
             <ItemsControl x:Name="myItemsControl" ItemsSource="{Binding FilteredDataItemsCart}" Background="White">
                 <ItemsControl.ItemsPanel>
@@ -144,8 +142,7 @@
                 <Button Content="Профиль" Click="Profile_Click" Style="{StaticResource FlatButtonStyle}"/>
                 <Button Content="Бойлер" Click="Boiler_Click" Style="{StaticResource FlatButtonStyle}"/>
                 <Button Content="Радиаторы" Click="Radiator_Click" Style="{StaticResource FlatButtonStyle}"/>
-                <Button Content="Корзина" Click="Cart_Click" Style="{StaticResource FlatButtonStyle}"/>
-                <Button x:Name="OrdersButton" Content="Заказы клиентов" Click="Orders_Click" Visibility="Collapsed" Style="{StaticResource FlatButtonStyle}"/>
+                <Button  x:Name="CartButton" Content="Корзина" Click="Cart_Click" Style="{StaticResource FlatButtonStyle}"/>
                 <Button x:Name="ProductsButton" Content="Управление товарами" Click="Products_Click" Visibility="Collapsed" Style="{StaticResource FlatButtonStyle}"/>
                 <Button x:Name="EmployeesButton" Content="Сотрудники" Click="Employees_Click" Visibility="Collapsed" Style="{StaticResource FlatButtonStyle}"/>
                 <Button x:Name="ProductButton" Content="Управление товарами" Click="Product_Click" Visibility="Collapsed" Style="{StaticResource FlatButtonStyle}"/>

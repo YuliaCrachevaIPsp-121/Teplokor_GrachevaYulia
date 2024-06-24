@@ -56,6 +56,7 @@ namespace TeploKor.View
             FilteredDataItems = new ObservableCollection<DataItems>(DataItems.Where(item => item.dataItemsBoilerId.HasValue));
             myItemsControl.ItemsSource = FilteredDataItems;
             this.currentUser = currentUser;
+            
         }
         private void Menu_Click(object sender, RoutedEventArgs e)
         {
@@ -68,6 +69,21 @@ namespace TeploKor.View
             {
                 // делаем меню невидимым
                 MenuBorder.Opacity = 0;
+            }
+            if (currentUser.IsEmployee)
+            {
+                CartButton.Visibility = Visibility.Collapsed;
+                EmployeesButton.Visibility = Visibility.Collapsed;
+            }
+            else if (currentUser.IsAdmin)
+            {
+
+                CartButton.Visibility = Visibility.Collapsed;
+            }
+            else
+            {
+                EmployeesButton.Visibility = Visibility.Collapsed;
+                ProductButton.Visibility = Visibility.Collapsed;
             }
         }
 
@@ -95,31 +111,25 @@ namespace TeploKor.View
         }
         private void Radiator_Click(object sender, RoutedEventArgs e)
         {
-            WindowRadiator windowRadiator = new WindowRadiator();
+            WindowRadiator windowRadiator = new WindowRadiator(currentUser);
             windowRadiator.Show();
-            this.Close();
-        }
-        private void Orders_Click(object sender, RoutedEventArgs e)
-        {
-            WindowHistory windowHistory = new WindowHistory();
-            windowHistory.Show();
             this.Close();
         }
         private void Products_Click(object sender, RoutedEventArgs e)
         {
-            WindowEmployeeControl windowEmployeeControl = new WindowEmployeeControl();
+            WindowEmployeeControl windowEmployeeControl = new WindowEmployeeControl(currentUser);
             windowEmployeeControl.Show();
             this.Close();
         }
         private void Employees_Click(object sender, RoutedEventArgs e)
         {
-            WindowEmployee windowEmployee = new WindowEmployee();
+            WindowEmployee windowEmployee = new WindowEmployee(currentUser);
             windowEmployee.Show();
             this.Close();
         }
         private void Product_Click(object sender, RoutedEventArgs e)
         {
-            WindowEmployeeControl windowEmployeeControl = new WindowEmployeeControl();
+            WindowEmployeeControl windowEmployeeControl = new WindowEmployeeControl(currentUser);
             windowEmployeeControl.Show();
             this.Close();
         }
